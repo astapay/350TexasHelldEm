@@ -30,7 +30,7 @@ public class CardController : MonoBehaviour
             for(int s = 0; s < 4; s++)
             {
                 testCard = new Card(r, s);
-                deck[deckIndex] = new Card(r, s);
+                //deck[deckIndex] = new Card(r, s);
                 deckIndex++;
             }
         }
