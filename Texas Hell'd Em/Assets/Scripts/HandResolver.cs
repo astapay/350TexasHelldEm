@@ -10,13 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// (Temporary) Card struct for the attributes of a playing card
-public struct Card
-{
-    public int rank;
-    public int suit;
-}
-
 public class HandResolver
 {
     // <summary>
@@ -124,7 +117,7 @@ public class HandResolver
             {
                 // If we find a rank out of place, swap places
                 // We also made a change, so set the control variable to true
-                if (hand[i-1].rank < hand[i].rank)
+                if (hand[i-1].getRank() < hand[i].getRank())
                 {
                     Card temp = hand[i];
                     hand[i] = hand[i-1];
@@ -178,7 +171,7 @@ public class HandResolver
         // each suit that appears
         for (int i = 0; i < hand.Length; i++)
         {
-            ct[hand[i].suit]++;
+            ct[hand[i].getSuit()]++;
         }
 
         // Now, we loop through ct and see if any suit appears
@@ -221,11 +214,11 @@ public class HandResolver
         // stored already
         for (int i = 0; i < hand.Length; i++)
         {
-            ct[hand[i].suit]++;
+            ct[hand[i].getSuit()]++;
 
-            if (firstSuit[hand[i].suit] == -1)
+            if (firstSuit[hand[i].getSuit()] == -1)
             {
-                firstSuit = i;
+                firstSuit[hand[i].getSuit()] = i;
             }
         }
 
@@ -239,6 +232,7 @@ public class HandResolver
                 return firstSuit[i];
             }
         }
+        return -1;
     }
 
     // <summary>
@@ -257,7 +251,7 @@ public class HandResolver
         {
             // If the previous Card's rank - 1 is the same as this Card's rank,
             // then we have a potential straight going on
-            if (hand[i-1].rank - 1 == hand[i].rank)
+            if (hand[i-1].getRank() - 1 == hand[i].getRank())
             {
                 ct++;
 
@@ -294,7 +288,7 @@ public class HandResolver
         // Loop through hand, doing the same as in FindStraight
         for (i = 1; i < hand.Length; i++)
         {
-            if (hand[i - 1].rank - 1 == hand[i].rank)
+            if (hand[i - 1].getRank() - 1 == hand[i].getRank())
             {
                 ct++;
 
@@ -330,7 +324,7 @@ public class HandResolver
         {
             // If the previous Card's rank is the same as this Card's rank,
             // increase the counter
-            if (hand[i - 1].rank == hand[i].rank)
+            if (hand[i - 1].getRank() == hand[i].getRank())
             {
                 ct++;
             }
@@ -369,7 +363,7 @@ public class HandResolver
         // Loop through hand, doing the same as in FindOfAKind
         for (i = 1; i < hand.Length; i++)
         {
-            if (hand[i - 1].rank == hand[i].rank)
+            if (hand[i - 1].getRank() == hand[i].getRank())
             {
                 ct++;
             }
@@ -404,7 +398,7 @@ public class HandResolver
         {
             // If the previous Card's rank is the same as this Card's rank,
             // increment the counter
-            if (hand[i - 1].rank == hand[i].rank)
+            if (hand[i - 1].getRank() == hand[i].getRank())
             {
                 ct++;
 
@@ -434,7 +428,7 @@ public class HandResolver
         // Loop through hand the same way we did in FindPairs
         for (int i = 1; i < hand.Length; i++)
         {
-            if (hand[i - 1].rank == hand[i].rank)
+            if (hand[i - 1].getRank() == hand[i].getRank())
             {
                 // This time, we will save the index in our array
                 // Create a temp array with one more slot
@@ -485,11 +479,11 @@ public class HandResolver
                     // Whichever finds the higher card first wins
                     for (int i = 0; i < hand1.Length; i++)
                     {
-                        if (hand1[i].rank > hand2[i].rank)
+                        if (hand1[i].getRank() > hand2[i].getRank())
                         {
                             return true;
                         }
-                        else if (hand1[i].rank < hand2[i].rank)
+                        else if (hand1[i].getRank() < hand2[i].getRank())
                         {
                             return false;
                         }
@@ -508,11 +502,11 @@ public class HandResolver
                     int[] pairIndex2 = FindPairIndex(hand2);
 
                     // The higher pair wins the tie
-                    if (hand1[pairIndex1[0]].rank > hand2[pairIndex2[0]].rank)
+                    if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
                     {
                         return true;
                     }
-                    else if (hand1[pairIndex1[0]].rank < hand2[pairIndex2[0]].rank)
+                    else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
                     {
                         return false;
                     }
@@ -521,11 +515,11 @@ public class HandResolver
                     else if (pairIndex1.Length >= 2)
                     {
                         // The next pairs will attempt to break the tie now
-                        if (hand1[pairIndex1[1]].rank > hand2[pairIndex2[1]].rank)
+                        if (hand1[pairIndex1[1]].getRank() > hand2[pairIndex2[1]].getRank())
                         {
                             return true;
                         }
-                        else if (hand1[pairIndex1[1]].rank < hand2[pairIndex2[1]].rank)
+                        else if (hand1[pairIndex1[1]].getRank() < hand2[pairIndex2[1]].getRank())
                         {
                             return false;
                         }
@@ -561,11 +555,11 @@ public class HandResolver
                                 // Check the ranks
                                 if (i < hand1.Length && j < hand2.Length)
                                 {
-                                    if (hand1[i].rank > hand2[j].rank)
+                                    if (hand1[i].getRank() > hand2[j].getRank())
                                     {
                                         return true;
                                     }
-                                    else if (hand1[i].rank < hand2[j].rank)
+                                    else if (hand1[i].getRank() < hand2[j].getRank())
                                     {
                                         return false;
                                     }
@@ -611,11 +605,11 @@ public class HandResolver
                             // Check the ranks
                             if (i < hand1.Length && j < hand2.Length)
                             {
-                                if (hand1[i].rank > hand2[j].rank)
+                                if (hand1[i].getRank() > hand2[j].getRank())
                                 {
                                     return true;
                                 }
-                                else if (hand1[i].rank < hand2[j].rank)
+                                else if (hand1[i].getRank() < hand2[j].getRank())
                                 {
                                     return false;
                                 }
@@ -638,11 +632,11 @@ public class HandResolver
 
                     // Now, we check the ranks of the 3 of a Kinds
                     // Higher rank wins
-                    if (hand1[kindIndex1].rank > hand2[kindIndex2].rank)
+                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
                     {
                         return true;
                     }
-                    else if (hand1[kindIndex1].rank < hand2[kindIndex2].rank)
+                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
                     {
                         return false;
                     }
@@ -668,11 +662,11 @@ public class HandResolver
 
                             if (i < hand1.Length && j < hand2.Length)
                             {
-                                if (hand1[i].rank > hand2[j].rank)
+                                if (hand1[i].getRank() > hand2[j].getRank())
                                 {
                                     return true;
                                 }
-                                else if (hand1[i].rank < hand2[j].rank)
+                                else if (hand1[i].getRank() < hand2[j].getRank())
                                 {
                                     return false;
                                 }
@@ -697,11 +691,11 @@ public class HandResolver
                     int straightIndex2 = FindStraightIndex(hand2);
 
                     // Compare the ranks of the highest Cards of the Straights
-                    if (hand1[straightIndex1].rank > hand2[straightIndex2].rank)
+                    if (hand1[straightIndex1].getRank() > hand2[straightIndex2].getRank())
                     {
                         return true;
                     }
-                    else if (hand1[straightIndex1].rank < hand2[straightIndex2].rank)
+                    else if (hand1[straightIndex1].getRank() < hand2[straightIndex2].getRank())
                     {
                         return false;
                     }
@@ -717,8 +711,8 @@ public class HandResolver
                     int flushIndex2 = FindFlushIndex(hand2);
 
                     // We also need to know what suit the Flushes are
-                    int suit1 = hand1[flushIndex1].suit;
-                    int suit2 = hand2[flushIndex2].suit;
+                    int suit1 = hand1[flushIndex1].getSuit();
+                    int suit2 = hand2[flushIndex2].getSuit();
 
                     // Loop through the hands
                     do
@@ -727,14 +721,14 @@ public class HandResolver
                         // Card to test
                         // So, we skip cards until we find the correct suit
                         while (flushIndex1 < hand1.Length && 
-                            hand1[flushIndex1].suit != suit1)
+                            hand1[flushIndex1].getSuit() != suit1)
                         {
                             flushIndex1++;
                         }
 
                         // Do the same for hand2
                         while (flushIndex2 < hand2.Length && 
-                            hand2[flushIndex2].suit != suit2)
+                            hand2[flushIndex2].getSuit() != suit2)
                         {
                             flushIndex2++;
                         }
@@ -742,11 +736,11 @@ public class HandResolver
                         // Compare ranks
                         if (flushIndex1 < hand1.Length && flushIndex2 < hand2.Length)
                         {
-                            if (hand1[flushIndex1].rank > hand2[flushIndex2].rank)
+                            if (hand1[flushIndex1].getRank() > hand2[flushIndex2].getRank())
                             {
                                 return true;
                             }
-                            else if (hand1[flushIndex1].rank < hand2[flushIndex2].rank)
+                            else if (hand1[flushIndex1].getRank() < hand2[flushIndex2].getRank())
                             {
                                 return false;
                             }
@@ -769,11 +763,11 @@ public class HandResolver
                     int kindIndex2 = FindOfAKindIndex(hand2);
 
                     // Compare the ranks
-                    if (hand1[kindIndex1].rank > hand2[kindIndex2].rank)
+                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
                     {
                         return true;
                     }
-                    else if (hand1[kindIndex1].rank < hand2[kindIndex2].rank)
+                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
                     {
                         return false;
                     }
@@ -783,11 +777,11 @@ public class HandResolver
                         int[] pairIndex1 = FindPairIndex(hand1);
                         int[] pairIndex2 = FindPairIndex(hand2);
 
-                        if (hand1[pairIndex1[0]].rank > hand2[pairIndex2[0]].rank)
+                        if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
                         {
                             return true;
                         }
-                        else if (hand1[pairIndex1[0]].rank < hand2[pairIndex2[0]].rank)
+                        else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
                         {
                             return false;
                         }
@@ -804,11 +798,11 @@ public class HandResolver
                     int kindIndex2 = FindOfAKindIndex(hand2);
 
                     // Compare the ranks
-                    if (hand1[kindIndex1].rank > hand2[kindIndex2].rank)
+                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
                     {
                         return true;
                     }
-                    else if (hand1[kindIndex1].rank < hand2[kindIndex2].rank)
+                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
                     {
                         return false;
                     }

@@ -6,14 +6,24 @@ using UnityEngine;
 public struct Card
 {
     private int rank;  //0-8 represent ranks 2-10, 9 is Jack, 10 is Queen, 11 is King, and 12 is Ace
-    private int suite; //0 is Club, 1 is Diamond, 2 is Heart, 3 is Spade
+    private int suit; //0 is Club, 1 is Diamond, 2 is Heart, 3 is Spade
     private bool inUse;
 
     public Card(int r, int s)
     {
         rank = r;
-        suite = s;
+        suit = s;
         inUse = false;
+    }
+
+    public int getRank()
+    { 
+        return rank; 
+    }
+
+    public int getSuit()
+    {
+        return suit;
     }
 }
 
