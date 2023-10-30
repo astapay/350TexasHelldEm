@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -29,7 +30,12 @@ public struct Card
 
 public class CardController : MonoBehaviour
 {
+    private bool game = true;
     public Card[] deck;
+    [SerializeField] private GameObject cardPF;
+    public void endGame() { 
+        game = false;
+    }
 
     private void Start()
     {
@@ -43,6 +49,32 @@ public class CardController : MonoBehaviour
                 //deck[deckIndex] = new Card(r, s);
                 deckIndex++;
             }
+        }
+        StartCoroutine(CreateACard());
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Shield") {
+            //destroy card
+        }
+        else if(collision.gameObject.tag == "Collector"){ 
+            //add card to hand
+            //destroy
+        }
+    }
+
+    IEnumerator CreateACard()
+    {
+        int spawns = 0;
+        while(game)
+        {
+            float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
+            Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10); // random position
+            Instantiate(cardPF, cardPos, Quaternion.identity); //create ball
+            spawns++;
+
+            yield return new WaitForSeconds(6 * Mathf.Log(spawns) );
         }
     }
 }

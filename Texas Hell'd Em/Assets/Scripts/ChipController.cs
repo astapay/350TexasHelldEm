@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class ChipController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //spawn rate: y=6ln(x)
+    //x = # spawns
+    //y = secs between spawns
 
-    // Update is called once per frame
-    void Update()
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.tag == "Shield")
+        {
+            //add points corresponding to chip
+            //destroy chip
+        }
+        else if (collision.gameObject.tag == "Collector")
+        {
+            //subtract points corresponding to chip
+            //GameController.updateScoreText();
+            //destroy chip
+        }
     }
 }
