@@ -512,6 +512,7 @@ MonoBehaviour:
   PlayerController: {fileID: 2065167191}
   scoreText: {fileID: 322599280}
   score: 0
+  cardPF: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,13 +1023,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1592646173}
   - component: {fileID: 1592646172}
+  - component: {fileID: 1592646174}
   m_Layer: 0
   m_Name: CardController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1592646172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,6 +1043,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e59e05571eec444bb6a99a6b0fa3d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 1592646174}
+  cardSprites:
+  - {fileID: 21300000, guid: c1765d16aa4da084d95909de4a60e3d7, type: 3}
+  - {fileID: 21300000, guid: 6c7bbb4d5182f5343afb284ad7e22ae8, type: 3}
+  - {fileID: 21300000, guid: 0996bb3480d2a7449beebe62915cdfc0, type: 3}
+  - {fileID: 21300000, guid: cc5ae2870b2286b4cb4d1d311a5b21df, type: 3}
+  - {fileID: 21300000, guid: fd457ba6cca832143a5bd11aff19c215, type: 3}
+  - {fileID: 21300000, guid: d3c6180d8b71a194fbc440b4421f6e24, type: 3}
+  - {fileID: 21300000, guid: d72d9faac3db3004aa6f1b84bcea5dd6, type: 3}
+  - {fileID: 21300000, guid: e2a4b5b86c969b64c9f0753aa838c160, type: 3}
+  - {fileID: 21300000, guid: ab2fade4e9afd7944aa567dd004870fe, type: 3}
+  - {fileID: 21300000, guid: 5deeac9568f8ceb4ca5c87c25383bf82, type: 3}
+  - {fileID: 21300000, guid: 0547ff0d3e554a94cbde9ac5a94494f7, type: 3}
+  - {fileID: 21300000, guid: 5caec342a4987f04db8e9c8f130eeb8f, type: 3}
+  - {fileID: 21300000, guid: 29f25dde420a38c40811a9d1f3693c0f, type: 3}
+  - {fileID: 21300000, guid: 9a382ce18d03d5c47ae991eb8aacca48, type: 3}
+  - {fileID: 21300000, guid: 56d975ce79bc66949808602d3ac46e1a, type: 3}
+  - {fileID: 21300000, guid: 9ae682a924ccedc4fb3d6cbd1eb04b5b, type: 3}
+  - {fileID: 21300000, guid: 5ece571e2c1d9014ba1f877e5c303b2b, type: 3}
+  - {fileID: 21300000, guid: 440794f781c8f5049b8cc5b5eefc178b, type: 3}
+  - {fileID: 21300000, guid: 3b38edb8a9f925d49be2c813567548e2, type: 3}
+  - {fileID: 21300000, guid: 82e61c04cc43aeb4fbeebca1dd0665b8, type: 3}
+  - {fileID: 21300000, guid: c15f4375ba72bde4a957928d74f74bec, type: 3}
+  - {fileID: 21300000, guid: e07dba7c6c1439a4ca6f47ad230bddb6, type: 3}
+  - {fileID: 21300000, guid: cceb75ee03c9d934eabe6ab661d819e3, type: 3}
+  - {fileID: 21300000, guid: c250343971e76164d8edb86a7f2e4953, type: 3}
+  - {fileID: 21300000, guid: 22c27bd64036e2e48b3868137167ba45, type: 3}
+  - {fileID: 21300000, guid: 09dd1cda5954af9488df844cf286e04c, type: 3}
+  - {fileID: 21300000, guid: 30bcc3ade858ffe4d80119c5fd9cbe92, type: 3}
+  - {fileID: 21300000, guid: a97623b9321301e4ab37ad9907642ff3, type: 3}
+  - {fileID: 21300000, guid: f717b11911b5ee447a3c541b90241cc7, type: 3}
+  - {fileID: 21300000, guid: 4aad0e9e946fa4d4898ba33c0327c442, type: 3}
+  - {fileID: 21300000, guid: 33bda279f9d719a4abbd09947d1ba9f2, type: 3}
+  - {fileID: 21300000, guid: e9bf3ed6413054442a85c9246670b570, type: 3}
+  - {fileID: 21300000, guid: 3b1dbd27c8b13074790ab0eda293b046, type: 3}
+  - {fileID: 21300000, guid: b35847136b0e95a40aff2e42cd891bc7, type: 3}
+  - {fileID: 21300000, guid: 9785064f36cf4a34bb94e0ba1207d339, type: 3}
+  - {fileID: 21300000, guid: de9ea03a274246943b6b5fd354d83ef2, type: 3}
+  - {fileID: 21300000, guid: 1f9ae5d4007e95d4ab215a96848c429e, type: 3}
+  - {fileID: 21300000, guid: d7ded1f9f86445442949df80ae532299, type: 3}
+  - {fileID: 21300000, guid: e2f31a9cc53c9d244b1b9febc562d9e1, type: 3}
+  - {fileID: 21300000, guid: 2b56d1e60578baa45a3f79239af21ae2, type: 3}
+  - {fileID: 21300000, guid: 6fb3522573ae19f499789d04386e03fa, type: 3}
+  - {fileID: 21300000, guid: 9d8daf548a4c8994a979e665c3a9c65c, type: 3}
+  - {fileID: 21300000, guid: 6a9093cbf7f3d86419b2c9c5782b689a, type: 3}
+  - {fileID: 21300000, guid: b8a20d180a0159b45aa52072d87460cf, type: 3}
+  - {fileID: 21300000, guid: 1e163e82165421a429214dc3dba6e7f2, type: 3}
+  - {fileID: 21300000, guid: 48d3fb68e9239a6479186d4fb52b15d9, type: 3}
+  - {fileID: 21300000, guid: ff9198ea024885047ba853b69523c446, type: 3}
+  - {fileID: 21300000, guid: a43050a00342fd34d8f317aed57a11a8, type: 3}
+  - {fileID: 21300000, guid: f1f419c1729e51846b69c8f445073a1a, type: 3}
+  - {fileID: 21300000, guid: e228dabee813e434383adc2a33a7d370, type: 3}
+  - {fileID: 21300000, guid: 6f8590d7672541347a45bb0b4551116e, type: 3}
+  - {fileID: 21300000, guid: 15c73fa51e8ca344ca64e6be4948ac69, type: 3}
   cardPF: {fileID: 6745268308880181436, guid: 0fd11fe8b9f253b47aa5d1d164105b61, type: 3}
 --- !u!4 &1592646173
 Transform:
@@ -1057,6 +1113,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1592646174
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592646171}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.7, y: 2.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &2065167187
 GameObject:
   m_ObjectHideFlags: 0

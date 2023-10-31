@@ -10,13 +10,11 @@ public struct Card
 {
     private int rank;  //0-8 represent ranks 2-10, 9 is Jack, 10 is Queen, 11 is King, and 12 is Ace
     private int suit; //0 is Club, 1 is Diamond, 2 is Heart, 3 is Spade
-    private bool inUse;
 
     public Card(int r, int s)
     {
         rank = r;
         suit = s;
-        inUse = false;
     }
 
     public int getRank()
@@ -32,27 +30,14 @@ public struct Card
 
 public class CardController : MonoBehaviour
 {
-    private bool game = true;
-    public Card[] deck;
+    [SerializeField] private SpriteRenderer SpriteRenderer;
+    [SerializeField] private Sprite[] cardSprites;
     [SerializeField] private GameObject cardPF;
-    public void endGame() { 
-        game = false;
-    }
-
+    public Card cardStruct;
+    private GameObject cardObject;
     private void Start()
     {
-        Card testCard;
-        int deckIndex = 0;
-        for(int r = 0; r < 13; r++)
-        {
-            for(int s = 0; s < 4; s++)
-            {
-                testCard = new Card(r, s);
-                //deck[deckIndex] = new Card(r, s);
-                deckIndex++;
-            }
-        }
-        StartCoroutine(CreateACard());
+        
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -66,19 +51,16 @@ public class CardController : MonoBehaviour
         }
     }
 
-    IEnumerator CreateACard()
-    {
-        int spawns = 0;
-        while(game)
-        {
-            float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
-            Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10); // random position
+    public void changeSprite() {
+        SpriteRenderer.sprite = cardSprites[ cardStruct.getSuit() * 13 + cardStruct.getRank() ];
+    }
 
-            GameObject card = (GameObject)Instantiate(cardPF, cardPos, new Quaternion(0,0,angle,0) ); //create ball
-            card.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -10, cardPos.y / -10);
-            spawns++;
-
-            yield return new WaitForSeconds(MathF.Exp((spawns - 1)/20));
-        }
+    public void createCard(Queue<Card> deck) {
+        float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
+        Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10); // random position
+        cardObject = (GameObject)Instantiate(cardPF, cardPos, new Quaternion(0, 0, angle, 0)); //create card
+        cardStruct = deck.Dequeue();
+        changeSprite();
+        cardObject.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -10, cardPos.y / -10);
     }
 }
