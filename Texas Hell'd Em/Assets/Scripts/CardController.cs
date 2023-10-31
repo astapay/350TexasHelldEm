@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public struct Card
 {
@@ -71,10 +73,12 @@ public class CardController : MonoBehaviour
         {
             float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
             Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10); // random position
-            Instantiate(cardPF, cardPos, Quaternion.identity); //create ball
+
+            GameObject card = (GameObject)Instantiate(cardPF, cardPos, new Quaternion(0,0,angle,0) ); //create ball
+            card.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -10, cardPos.y / -10);
             spawns++;
 
-            yield return new WaitForSeconds(6 * Mathf.Log(spawns) );
+            yield return new WaitForSeconds(MathF.Exp((spawns - 1)/20));
         }
     }
 }
