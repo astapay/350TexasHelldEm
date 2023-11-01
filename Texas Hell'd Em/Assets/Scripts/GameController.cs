@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
     public int score;
     private bool game = true;
 
-    [SerializeField] private Queue<Card> deck;
-    private Card[] river = new Card[5];
+    public Queue<CardData> deck;
+    private CardData[] river = new CardData[5];
     [SerializeField] private GameObject cardPF;
 
 
@@ -47,17 +47,17 @@ public class GameController : MonoBehaviour
         }
     }
 
-    static Queue<Card> ShuffleDeck()
+    static Queue<CardData> ShuffleDeck()
     {
-        Card[] allCards = new Card[52];
+        CardData[] allCards = new CardData[52];
         int deckIndex = 0;
-        Queue<Card> deck = new Queue<Card>();
+        Queue<CardData> deck = new Queue<CardData>();
 
         for (int r = 0; r < 13; r++)
         {
             for (int s = 0; s < 4; s++)
             {
-                allCards[deckIndex] = new Card(r, s);
+                allCards[deckIndex] = new CardData(r, s);
                 deckIndex++;
             }
         }
@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
         for (int i = allCards.Length - 1; i > 0; i--)
         {
             int j = rng.Next(0, i + 1);
-            Card temp = allCards[i];
+            CardData temp = allCards[i];
             allCards[i] = allCards[j];
             allCards[j] = temp;
         }

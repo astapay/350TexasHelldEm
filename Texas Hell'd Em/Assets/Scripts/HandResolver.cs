@@ -19,7 +19,7 @@ public class HandResolver
     // <param name="hand2"> The second hand to evaluate </param>
     // <returns> true if hand1 wins or ties against hand2,
     // or false otherwise </returns>
-    public bool ResolveHands(Card[] hand1, Card[] hand2)
+    public bool ResolveHands(CardData[] hand1, CardData[] hand2)
     {
         // Find the values of each hand
         int hand1Result = FindHand(hand1);
@@ -46,7 +46,7 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The hand to evaluate </param>
     // <returns> An int representing the general strength of hand </returns>
-    private int FindHand(Card[] hand)
+    private int FindHand(CardData[] hand)
     {
         // To make things easier, let's sort the hand
         hand = SortHand(hand);
@@ -101,7 +101,7 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The array to be sorted </param>
     // <returns> The original array, now sorted </returns>
-    private Card[] SortHand(Card[] hand)
+    private CardData[] SortHand(CardData[] hand)
     {
         // Control variable to keep track of how long we need to sort
         bool changesMade = true;
@@ -119,7 +119,7 @@ public class HandResolver
                 // We also made a change, so set the control variable to true
                 if (hand[i-1].getRank() < hand[i].getRank())
                 {
-                    Card temp = hand[i];
+                    CardData temp = hand[i];
                     hand[i] = hand[i-1];
                     hand[i-1] = temp;
 
@@ -138,7 +138,7 @@ public class HandResolver
     // <param name="hand"> The hand to evaluate <\param>
     // <returns> true if the hand does contain a Straight Flush,
     // false otherwise </returns>
-    private bool ConfirmStraightFlush(Card[] hand)
+    private bool ConfirmStraightFlush(CardData[] hand)
     {
         // If our hand length is 5, then we absolutely have a Straight Flush
         if(hand.Length == 5)
@@ -161,7 +161,7 @@ public class HandResolver
     // <param name="hand"> The hand to evaluate </param>
     // <returns> true if the hand contains a Flush,
     // false otherwise </returns>
-    private bool FindFlush(Card[] hand)
+    private bool FindFlush(CardData[] hand)
     {
         // We will use an array of ints to keep track of
         // the number of each suit
@@ -194,7 +194,7 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The hand to be evaluated </param>
     // <returns> The index of the first card contributing to a Flush </returns>
-    private int FindFlushIndex(Card[] hand)
+    private int FindFlushIndex(CardData[] hand)
     {
         // We need to count the suits again
         int[] ct = new int[4];
@@ -241,7 +241,7 @@ public class HandResolver
     // <param name="hand"> The hand to evaluate </param>
     // <returns> true if the hand contains a Straight,
     // false otherwise </returns>
-    private bool FindStraight(Card[] hand)
+    private bool FindStraight(CardData[] hand)
     {
         // Counter to keep track of how many ranks we have in a row
         int ct = 1;
@@ -278,7 +278,7 @@ public class HandResolver
     // <param name="hand"> The hand to be evaluated </param>
     // <returns> The index of the first card contributing to a Straight
     // </returns>
-    private int FindStraightIndex(Card[] hand)
+    private int FindStraightIndex(CardData[] hand)
     {
         // We're going to keep count of rank again,
         // and we are also going to save our index
@@ -313,7 +313,7 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The hand to evaluate </param>
     // <returns> The number of cards of a kind in hand </returns>
-    private int FindOfAKind(Card[] hand)
+    private int FindOfAKind(CardData[] hand)
     {
         // Variables to keep track of how many of a kind we have
         int ct = 1;
@@ -353,7 +353,7 @@ public class HandResolver
     // <param name="hand"> The hand to evaluate </param>
     // <returns> The index of the first card of the best number of a kind
     // in hand </returns>
-    private int FindOfAKindIndex(Card[] hand)
+    private int FindOfAKindIndex(CardData[] hand)
     {
         // We will keep track of the ranks again,
         // and we will save the index too
@@ -388,7 +388,7 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The hand to be evaluated </param>
     // <returns> The number of pairs in hand </returns>
-    private int FindPairs(Card[] hand)
+    private int FindPairs(CardData[] hand)
     {
         // Keep a counter of the pairs
         int ct = 0;
@@ -420,7 +420,7 @@ public class HandResolver
     // <param name="hand"> The hand to evaluate </param>
     // <returns> An array of ints representing the indices of the pairs in hand
     // </returns>
-    private int[] FindPairIndex(Card[] hand)
+    private int[] FindPairIndex(CardData[] hand)
     {
         // Start with an empty array
         int[] back = new int[0];
@@ -463,7 +463,7 @@ public class HandResolver
     // <param name="handType"> The type of hand that the two hands share </param>
     // <returns> true if hand1 wins or ties against hand2,
     // or false otherwise </returns>
-    private bool Tiebreaker(Card[] hand1, Card[] hand2, int handType)
+    private bool Tiebreaker(CardData[] hand1, CardData[] hand2, int handType)
     {
         // Since we don't use references to the hands for sorting,
         // we will need to sort the hands again
