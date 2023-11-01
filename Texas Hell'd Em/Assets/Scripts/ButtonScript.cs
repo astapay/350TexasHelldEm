@@ -16,6 +16,7 @@ public class PlayButtonScript : MonoBehaviour
     [SerializeField] private string settings = "Settings";
     [SerializeField] private string credits = "Credits";
     [SerializeField] private string tutorial = "Tutorial";
+    [SerializeField] private string menu = "MainMenu";
     public void PlayButton()
     {
         SceneManager.LoadScene(game);
@@ -36,5 +37,9 @@ public class PlayButtonScript : MonoBehaviour
     public void TutorialButton()
     {
         SceneManager.LoadScene(tutorial);
+    }
+    public void MenuButton()
+    {
+        SceneManager.LoadScene(menu);
     }
 }
