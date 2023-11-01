@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     public int score;
     private bool game = true;
 
-    private Queue<Card> deck;
+    [SerializeField] private Queue<Card> deck;
     private Card[] river = new Card[5];
     [SerializeField] private GameObject cardPF;
 

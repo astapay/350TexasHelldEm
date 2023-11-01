@@ -51,16 +51,12 @@ public class CardController : MonoBehaviour
         }
     }
 
-    public void changeSprite() {
-        SpriteRenderer.sprite = cardSprites[ cardStruct.getSuit() * 13 + cardStruct.getRank() ];
-    }
-
     public void createCard(Queue<Card> deck) {
         float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
         Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10); // random position
-        cardObject = (GameObject)Instantiate(cardPF, cardPos, new Quaternion(0, 0, angle, 0)); //create card
+        cardObject = (GameObject)Instantiate(cardPF, cardPos, new Quaternion(0, 0, 0, 0)); //create card
         cardStruct = deck.Dequeue();
-        changeSprite();
+        cardObject.GetComponent<SpriteRenderer>().sprite = cardSprites[cardStruct.getSuit() * 13 + cardStruct.getRank()];
         cardObject.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -10, cardPos.y / -10);
     }
 }
