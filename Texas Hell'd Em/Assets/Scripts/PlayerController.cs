@@ -7,9 +7,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public CardController CardController;
-    Card[] hand = new Card[2];
+    CardData nullCard = new CardData(-1, -1);
+    CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
     int selectedCard;
     int handLevel;
+
+    public void Start()
+    {
+        logHand();
+    }
 
     private void Update()
     {
@@ -26,13 +32,22 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    public void addToHand(Card card) { 
-        for(int i = 0; i < hand.Length; i++) {
-            if (hand[i].Equals(default(Card)))
+    public void addToHand(CardData card) {
+        for (int i = 0; i < hand.Length; i++) {
+            if (hand[i].Equals(nullCard))
             {
                 hand[i] = card;
+                logHand();
+                return;
             }
         }
         hand[selectedCard] = card;
+    }
+
+    private void logHand() {
+        for (int i = 0; i < hand.Length; i++)
+        {
+            Debug.Log("Card slot " + i + ": " + hand[i].getRankName() + " of " + hand[i].getSuitName());
+        }
     }
 }
