@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     public CardController CardController;
     public ChipController ChipController;
     public PlayerController PlayerController;
-    public TMP_Text scoreText;
+    //public TMP_Text scoreText;
     public int score;
     private bool game = true;
 
@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         score = 0;
-        updateScoreText();
+        //updateScoreText();
         deck = ShuffleDeck();
         for (int i = 0; i < 5; i++)
         {
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
 
     public void updateScoreText()
     {
-        scoreText.text = score.ToString();
+        //scoreText.text = score.ToString();
     }
 
     IEnumerator CreateACard()
