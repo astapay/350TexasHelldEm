@@ -17,27 +17,51 @@ public class PlayButtonScript : MonoBehaviour
     [SerializeField] private string credits = "Credits";
     [SerializeField] private string tutorial = "Tutorial";
     [SerializeField] private string menu = "MainMenu";
+
+    // <summary>
+    // Loads the game scene into the game
+    // </summary>
     public void PlayButton()
     {
         SceneManager.LoadScene(game);
     }
+
+    // <summary>
+    // Quits the game and exits the application
+    // </summary>
     public void QuitButton()
     {
         Application.Quit();
         UnityEditor.EditorApplication.isPlaying = false;
     }
+
+    // <summary>
+    // Loads the settings menu
+    // </summary>
     public void SettingsButton()
     {
         SceneManager.LoadScene(settings);
     }
+
+    // <summary>
+    // Loads the credits menu
+    // </summary>
     public void CreditsButton()
     {
         SceneManager.LoadScene(credits);
     }
+
+    // <summary>
+    // Loads the tutorial for the game
+    // </summary>
     public void TutorialButton()
     {
         SceneManager.LoadScene(tutorial);
     }
+
+    // <summary>
+    // Loads the main menu
+    // </summary>
     public void MenuButton()
     {
         SceneManager.LoadScene(menu);

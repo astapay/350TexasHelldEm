@@ -1,3 +1,10 @@
+/******************************************************************************
+// File Name:       GameController.cs
+// Author:          Alex Kalscheur
+// Creation date:   10/21/2023
+// Summary:         The game manager. Controls various aspects of the game that
+                    the player does not control.
+******************************************************************************/
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +24,9 @@ public class GameController : MonoBehaviour
     private CardData[] river = new CardData[5];
     [SerializeField] private GameObject cardPF;
 
-
+    // <summary>
+    // Used to initialize our global variables
+    // </summary>
     private void Start()
     {
         score = 0;
@@ -27,14 +36,23 @@ public class GameController : MonoBehaviour
         {
             river[i] = deck.Dequeue();
         }
+
+        // We will start a coroutine to create cards
         StartCoroutine(CreateACard());
     }
 
+    // <summary>
+    // Updates the score on the bottom left of the screen
+    // </summary>
     public void updateScoreText()
     {
         //scoreText.text = score.ToString();
     }
 
+    // <summary>
+    // Creates a card based on an equation that will send enough cards
+    // at an increasing interval
+    // </summary>
     IEnumerator CreateACard()
     {
         int spawns = 0;
@@ -47,6 +65,9 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // <summary>
+    // Shuffles a deck of playing cards to use to send to the player
+    // </summary>
     static Queue<CardData> ShuffleDeck()
     {
         CardData[] allCards = new CardData[52];

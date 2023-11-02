@@ -1,3 +1,10 @@
+/******************************************************************************
+// File Name:       PlayerController.cs
+// Author:          Alex Kalscheur
+// Creation date:   10/21/2023
+// Summary:         Controls the player's actions. Includes finding the mouse
+                    position to find where to target the shield.
+******************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +19,17 @@ public class PlayerController : MonoBehaviour
     int selectedCard;
     int handLevel;
 
+    // <summary>
+    // Currently used for debugging to print our current poker hand
+    // </summary>
     public void Start()
     {
         logHand();
     }
 
+    // <summary>
+    // Used to rotate the player's shield in the direction of the mouse
+    // </summary>
     private void Update()
     {
         // Capture the mouse position in screen coordinates
@@ -32,6 +45,12 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
+    // <summary>
+    // Adds a card to the player's hand
+    // </summary>
+    // <param name="card">
+    // The card to be added to the hand
+    // </param>
     public void addToHand(CardData card) {
         for (int i = 0; i < hand.Length; i++) {
             if (hand[i].Equals(nullCard))
@@ -44,6 +63,10 @@ public class PlayerController : MonoBehaviour
         hand[selectedCard] = card;
     }
 
+    // <summary>
+    // Prints the current contents of the hand to the console
+    // Used for debugging
+    // </summary>
     private void logHand() {
         for (int i = 0; i < hand.Length; i++)
         {
