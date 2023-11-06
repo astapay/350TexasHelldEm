@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CutScene.unity
     guid: 2fe926a229845c4499f95b6e9746a7d0
+  - enabled: 1
+    path: Assets/Scenes/TutorialMenu.unity
+    guid: 2f0c19816d67d364891fd55c34afc1f9
+  - enabled: 1
+    path: Assets/Scenes/BulletHellTutorial.unity
+    guid: d2d9ca711f678f94dbeccc14c09075eb
+  - enabled: 1
+    path: Assets/Scenes/PokerTutorial.unity
+    guid: 68c06f135542bf147866c7e31b492883
   m_configObjects: {}

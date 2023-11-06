@@ -8,15 +8,17 @@ using UnityEngine.SceneManagement;
 File name: PlayButtonScript
 author: David Henvick
 Creation date: 10/21/23
-summary: this is the script that is used control the overall game and player
+summary: this is the script that is used control button inputs and events
 */
 public class PlayButtonScript : MonoBehaviour
 {
-    [SerializeField] private string game = "BulletHellScene";
+    [SerializeField] private string game = "SampleScene";
     [SerializeField] private string settings = "Settings";
     [SerializeField] private string credits = "Credits";
-    [SerializeField] private string tutorial = "Tutorial";
+    [SerializeField] private string tutorial = "TutorialMenu";
     [SerializeField] private string menu = "MainMenu";
+    [SerializeField] private string poker = "PokerTutorial";
+    [SerializeField] private string bulletHell = "BulletHellTutorial";
 
     // <summary>
     // Loads the game scene into the game
@@ -65,5 +67,21 @@ public class PlayButtonScript : MonoBehaviour
     public void MenuButton()
     {
         SceneManager.LoadScene(menu);
+    }
+
+    // <summary>
+    // Loads the poker tutorial
+    // </summary>
+    public void PokerButton()
+    {
+        SceneManager.LoadScene(poker);
+    }
+
+    // <summary>
+    // Loads the bullethell tutorial
+    // </summary>
+    public void BulletHellButton()
+    {
+        SceneManager.LoadScene(bulletHell);
     }
 }
