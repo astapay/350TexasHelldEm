@@ -59,4 +59,39 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
         }
     }
+
+    // <summary>
+    // Shuffles a deck of playing cards to use to send to the player
+    // </summary>
+    static Queue<CardData> ShuffleDeck()
+    {
+        CardData[] allCards = new CardData[52];
+        int deckIndex = 0;
+        Queue<CardData> deck = new Queue<CardData>();
+
+        for (int r = 0; r < 13; r++)
+        {
+            for (int s = 0; s < 4; s++)
+            {
+                allCards[deckIndex] = new CardData(r, s);
+                deckIndex++;
+            }
+        }
+
+        System.Random rng = new System.Random();
+
+        for (int i = allCards.Length - 1; i > 0; i--)
+        {
+            int j = rng.Next(0, i + 1);
+            CardData temp = allCards[i];
+            allCards[i] = allCards[j];
+            allCards[j] = temp;
+        }
+
+        for (int i = 0; i < 52; i++)
+        {
+            deck.Enqueue(allCards[i]);
+        }
+        return deck;
+    }
 }
