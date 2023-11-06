@@ -1,3 +1,10 @@
+/******************************************************************************
+// File Name:       CardController.cs
+// Author:          Alex Kalscheur
+// Creation date:   10/21/2023
+// Summary:         Contains a CardData struct to store information for a card.
+                    Also contains code to instantiate each card in the scene.
+******************************************************************************/
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,22 +18,37 @@ public struct CardData
     private int rank;  //0-8 represent ranks 2-10, 9 is Jack, 10 is Queen, 11 is King, and 12 is Ace
     private int suit; //0 is Club, 1 is Diamond, 2 is Heart, 3 is Spade
 
+    // <summary>
+    // The constructor for CardData
+    // </summary>
     public CardData(int r, int s)
     {
         rank = r;
         suit = s;
     }
 
+    // <summary>
+    // Returns the rank of this card
+    // </summary>
+    // <returns> The rank of this card </returns>
     public int getRank()
     { 
         return rank; 
     }
 
+    // <summary>
+    // Returns the suit of this card
+    // </summary>
+    // <returns> The suit of this card </returns>
     public int getSuit()
     {
         return suit;
     }
 
+    // <summary>
+    // Returns the name of the suit of this card as a string
+    // </summary>
+    // <returns> the name of the suit of this card as a string </returns>
     public string getSuitName()
     {
         switch (suit)
@@ -47,6 +69,10 @@ public struct CardData
         return "no suit";
     }
 
+    // <summary>
+    // Returns the name of the rank of this card as a string
+    // </summary>
+    // <returns> the name of the rank of this card as a string </returns>
     public string getRankName() { 
         switch (rank) {
             case -1:
@@ -76,12 +102,19 @@ public class CardController : MonoBehaviour
     [SerializeField] private GameObject cardPF;
     private GameController gameController;
     private PlayerController playerController;
+
+    // <summary>
+    // Initializes our global variables
+    // </summary>
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
         playerController = FindObjectOfType<PlayerController>();
     }
 
+    // <summary>
+    // Creates a card from a deck in the scene
+    // </summary>
     public void createCard(Queue<CardData> deck) {
         float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
         Vector2 cardPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10);                                      // random position
