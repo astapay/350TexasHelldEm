@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PokerTutorial.unity
     guid: 68c06f135542bf147866c7e31b492883
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 8d13a64edc8f64f44bffbae025e1429a
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: 6d09b96972d5ecf4fb4497c2f295a393
   m_configObjects: {}
