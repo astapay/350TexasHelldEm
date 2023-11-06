@@ -28,6 +28,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // <summary>
+    //returns the Player's hand array
+    // </summary>
+    public CardData[] getHand() {
+        return hand;
+    }
+
+    // <summary>
     // Used to rotate the player's shield in the direction of the mouse
     // </summary>
     private void Update()
