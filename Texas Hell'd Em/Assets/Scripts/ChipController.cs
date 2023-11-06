@@ -1,25 +1,53 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ChipController : MonoBehaviour
 {
-    //spawn rate: y=6ln(x)
-    //x = # spawns
-    //y = secs between spawns
-
-    public void OnCollisionEnter2D(Collision2D collision)
+    public int chipValue = 10; 
+    private GameController gameController;
+    
+    private void Start()
     {
-        if (collision.gameObject.tag == "Shield")
+        gameController = FindObjectOfType<GameController>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Sheild"))
         {
-            //add points corresponding to chip
-            //destroy chip
+            // Check if the chip collided with the shield side of the player
+            if (IsCollidingWithShield(collision))
+            {
+                // Increase the chip counter
+                gameController.UpdateChipCounter(chipValue);
+
+                // Destroy the chip
+                Destroy(gameObject);
+            }
+            else
+            {
+                // Handle cases where the chip collides with the player but not the shield
+                // For example, inflict damage to the player or handle other game mechanics.
+                // For now, destroy the chip.
+                Destroy(gameObject);
+            }
         }
-        else if (collision.gameObject.tag == "Collector")
+        else if (collision.gameObject.CompareTag("Collector"))
         {
-            //subtract points corresponding to chip
-            //GameController.updateScoreText();
-            //destroy chip
+            // Subtract points corresponding to the chip
+            // GameController.updateScoreText();
+            Destroy(gameObject);
         }
     }
+
+    private bool IsCollidingWithShield(Collision2D collision)
+    {
+        return collision.transform.position.x > transform.position.x;
+    }
 }
+
