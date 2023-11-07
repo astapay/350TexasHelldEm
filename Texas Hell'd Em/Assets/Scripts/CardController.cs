@@ -93,6 +93,15 @@ public struct CardData
         }
         return rank + 2 + "";
     }
+
+    public bool isNull()
+    {
+        if (rank < 0 || suit < 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 public class CardController : MonoBehaviour
@@ -110,6 +119,10 @@ public class CardController : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         playerController = FindObjectOfType<PlayerController>();
+    }
+
+    public Sprite[] getCardSprites() {
+        return cardSprites;
     }
 
     // <summary>

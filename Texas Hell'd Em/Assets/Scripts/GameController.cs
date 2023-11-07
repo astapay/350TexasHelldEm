@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     public PlayerController PlayerController;
     public TMP_Text scoreText;
     public TMP_Text chipCounterText; // Add a Text component to display the chip counter
+    public GameObject[] handUI;
+    public GameObject[] riverUI;
     public int score;
     private int chipCounter = 0; // New variable to keep track of collected chips
     private bool game = true;
@@ -30,6 +32,17 @@ public class GameController : MonoBehaviour
             river[i] = deck.Dequeue();
         }
         StartCoroutine(CreateACard());
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (!PlayerController.getHand()[i].isNull())
+            {
+                handUI[i].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[PlayerController.getHand()[i].getSuit() * 13 + PlayerController.getHand()[i].getRank()];
+            }
+        }
     }
 
     public void updateScoreText()

@@ -4,6 +4,7 @@
 // Creation date:   10/21/2023
 // Summary:         Represents a playing card
 ******************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
