@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 /*
 * ******************************************************************
-File name: PokerTutorialScript
+File name: BulletHellTutorialScrip
 author: David Henvick
 Creation date: 10/21/23
 summary: this is the script in charge of the poker tutorial page;
 */
-public class PokerTutorialScript : MonoBehaviour
+public class BulletHellTutorialScrip : MonoBehaviour
 {
     //game object
     [SerializeField] private GameObject tutorial; 
@@ -17,13 +17,6 @@ public class PokerTutorialScript : MonoBehaviour
     [SerializeField] private Sprite one;
     [SerializeField] private Sprite two;
     [SerializeField] private Sprite three;
-    [SerializeField] private Sprite four;
-    [SerializeField] private Sprite five;
-    [SerializeField] private Sprite six;
-    [SerializeField] private Sprite seven;
-    [SerializeField] private Sprite eight;
-    [SerializeField] private Sprite nine;
-    [SerializeField] private Sprite ten;
     //buttons
     [SerializeField] private GameObject next;
     [SerializeField] private GameObject prev;
@@ -50,41 +43,13 @@ public class PokerTutorialScript : MonoBehaviour
         }
         else if (currPage == 2)
         {
+            next.SetActive(true);
             tutorial.GetComponent<SpriteRenderer>().sprite = two;
             prev.SetActive(true);
         }
         else if (currPage == 3)
         {
             tutorial.GetComponent<SpriteRenderer>().sprite = three;
-        }
-        else if (currPage == 4)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = four;
-        }
-        else if (currPage == 5)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = five;
-        }
-        else if (currPage == 6)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = six;
-        }
-        else if (currPage == 7)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = seven;
-        }
-        else if (currPage == 8)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = eight;
-        }
-        else if (currPage == 9)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = nine;
-            next.SetActive(true);
-        }
-        else if (currPage == 10)
-        {
-            tutorial.GetComponent<SpriteRenderer>().sprite = ten;
             next.SetActive(false);
         }
     }
