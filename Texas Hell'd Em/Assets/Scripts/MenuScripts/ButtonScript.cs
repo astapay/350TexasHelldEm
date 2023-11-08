@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 /*
 * ******************************************************************
-File name: PlayButtonScript
+File name: ButtonScript
 author: David Henvick
 Creation date: 10/21/23
 summary: this is the script that is used control button inputs and events
 */
-public class PlayButtonScript : MonoBehaviour
+public class ButtonScript : MonoBehaviour
 {
     [SerializeField] private string game = "SampleScene";
     [SerializeField] private string settings = "Settings";
