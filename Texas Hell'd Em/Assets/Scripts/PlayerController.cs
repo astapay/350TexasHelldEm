@@ -5,15 +5,20 @@
 // Summary:         Controls the player's actions. Includes finding the mouse
                     position to find where to target the shield.
 ******************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public CardController CardController;
+    public PlayerInput playerInput;
+    private InputAction chooseLeft;
+    private InputAction chooseRight;
     CardData nullCard = new CardData(-1, -1);
     CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
     int selectedCard;
@@ -24,7 +29,24 @@ public class PlayerController : MonoBehaviour
     // </summary>
     public void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
+        chooseLeft = playerInput.currentActionMap.FindAction("SelectCardZero");
+        chooseRight = playerInput.currentActionMap.FindAction("SelectCardOne");
+        chooseLeft.performed += chooseLeftPerformed;
+        chooseRight.performed += chooseRightPerformed;
         logHand();
+    }
+
+    private void chooseRightPerformed(InputAction.CallbackContext context)
+    {
+        selectedCard = 1;
+        Debug.Log(selectedCard);
+    }
+
+    private void chooseLeftPerformed(InputAction.CallbackContext context)
+    {
+        selectedCard = 0;
+        Debug.Log(selectedCard);
     }
 
     // <summary>
@@ -80,4 +102,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Card slot " + i + ": " + hand[i].getRankName() + " of " + hand[i].getSuitName());
         }
     }
+
+
 }

@@ -1,0 +1,54 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "CardSwitchActionMap",
+            "id": "08700001-35ce-4a73-bc9f-3513eb3679bb",
+            "actions": [
+                {
+                    "name": "SelectCardZero",
+                    "type": "Button",
+                    "id": "73996386-c904-4660-a05a-f851d3206a4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectCardOne",
+                    "type": "Button",
+                    "id": "da455182-d9c1-4ebe-8907-564dc96149a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1e279c46-2d2c-46bf-aff5-a3200a3ca017",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectCardZero",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da5d1696-8de0-43c4-b4f9-4f712cd758c0",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectCardOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
