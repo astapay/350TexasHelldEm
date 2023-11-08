@@ -20,11 +20,12 @@ public class GameController : MonoBehaviour
     public Queue<CardData> deck;
     private CardData[] river = new CardData[5];
     [SerializeField] private GameObject cardPF;
+    private int chipValue;
 
     private void Start()
     {
         score = 0;
-        updateScoreText();
+        updateScoreText(chipValue);
         updateChipCounterText(); // Initialize the chip counter text
         deck = ShuffleDeck();
         for (int i = 0; i < 5; i++)
@@ -45,7 +46,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void updateScoreText()
+    public void updateScoreText(int chipValue)
     {
         scoreText.text = score.ToString();
     }
