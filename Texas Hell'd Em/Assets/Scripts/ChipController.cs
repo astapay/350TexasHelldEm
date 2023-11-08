@@ -8,9 +8,8 @@ using UnityEngine.VFX;
 
 public class ChipController : MonoBehaviour
 {
-    public int chipValue = 10; 
     private GameController gameController;
-    
+
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
@@ -18,29 +17,23 @@ public class ChipController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Sheild"))
+        if (collision.gameObject.CompareTag("Shield"))
         {
-            // Check if the chip collided with the shield side of the player
             if (IsCollidingWithShield(collision))
             {
-                // Increase the chip counter
+                int chipValue = GetChipValueByTag();
                 gameController.UpdateChipCounter(chipValue);
-
-                // Destroy the chip
                 Destroy(gameObject);
             }
             else
             {
-                // Handle cases where the chip collides with the player but not the shield
-                // For example, inflict damage to the player or handle other game mechanics.
-                // For now, destroy the chip.
                 Destroy(gameObject);
             }
         }
         else if (collision.gameObject.CompareTag("Collector"))
         {
-            // Subtract points corresponding to the chip
-            // GameController.updateScoreText();
+            int chipValue = GetChipValueByTag();
+            gameController.updateScoreText(chipValue);
             Destroy(gameObject);
         }
     }
@@ -48,6 +41,29 @@ public class ChipController : MonoBehaviour
     private bool IsCollidingWithShield(Collision2D collision)
     {
         return collision.transform.position.x > transform.position.x;
+    }
+
+    private int GetChipValueByTag()
+    {
+        // Return the chip value based on the chip's tag
+        switch (gameObject.tag)
+        {
+            case "WhiteChip":
+                return 10;
+            case "RedChip":
+                return 20;
+            case "PurpleChip":
+                return 30;
+            case "GreenChip":
+                return 40;
+            case "BlackChip":
+                return 50;
+            case "BlueChip":
+                return 60;
+            // Add cases for other chip colors as needed
+            default:
+                return 0;
+        }
     }
 }
 
