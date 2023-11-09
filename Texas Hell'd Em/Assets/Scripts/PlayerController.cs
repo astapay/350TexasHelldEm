@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     int selectedCard;
     int handLevel;
 
+    //card selector objects
+    [SerializeField] private GameObject RightCardIndicator;
+    [SerializeField] private GameObject LeftCardIndicator;
+
     // <summary>
     // Currently used for debugging to print our current poker hand
     // </summary>
@@ -35,18 +39,24 @@ public class PlayerController : MonoBehaviour
         chooseLeft.performed += chooseLeftPerformed;
         chooseRight.performed += chooseRightPerformed;
         logHand();
+        RightCardIndicator.SetActive(false);
+        LeftCardIndicator.SetActive(true);
     }
 
     private void chooseRightPerformed(InputAction.CallbackContext context)
     {
         selectedCard = 1;
         Debug.Log(selectedCard);
+        RightCardIndicator.SetActive(true);
+        LeftCardIndicator.SetActive(false);
     }
 
     private void chooseLeftPerformed(InputAction.CallbackContext context)
     {
         selectedCard = 0;
         Debug.Log(selectedCard);
+        RightCardIndicator.SetActive(false);
+        LeftCardIndicator.SetActive(true);
     }
 
     // <summary>
