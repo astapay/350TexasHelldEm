@@ -135,6 +135,5 @@ public class CardController : MonoBehaviour
         CardData cardStruct = deck.Dequeue();                                                                             //Draws card from deck, sets to variable we will use twice
         cardObject.GetComponent<Card>().setCardData(cardStruct);                                                          // Sets data for our card to the card variable we made
         cardObject.GetComponent<SpriteRenderer>().sprite = cardSprites[cardStruct.getSuit() * 13 + cardStruct.getRank()]; //sets corresponding sprite based on card variable
-        cardObject.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -10, cardPos.y / -10);                  //moves card toward player
     }
 }
