@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardController: {fileID: 487826034}
-  ChipController: {fileID: 0}
+  ChipController: {fileID: 605085039}
   PlayerController: {fileID: 2065167191}
   scoreText: {fileID: 201632979}
   chipCounterText: {fileID: 444691147}
@@ -2336,7 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardController: {fileID: 487826034}
-  playerInput: {fileID: 0}
+  playerInput: {fileID: 2065167192}
   RightCardIndicator: {fileID: 1480997901}
   LeftCardIndicator: {fileID: 61279648}
 --- !u!114 &2065167192

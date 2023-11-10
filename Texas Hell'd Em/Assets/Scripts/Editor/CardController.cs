@@ -106,7 +106,6 @@ public struct CardData
 
 public class CardController : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer SpriteRenderer;
     [SerializeField] private Sprite[] cardSprites;
     [SerializeField] private GameObject cardPF;
     private GameController gameController;
