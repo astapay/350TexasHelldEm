@@ -167,13 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f767e4021170714428a59c77c89d6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: SampleScene
-  settings: Settings
-  credits: Credits
-  tutorial: TutorialMenu
-  menu: MainMenu
-  poker: PokerTutorial
-  bulletHell: BulletHellTutorial
 --- !u!1 &133616420
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,9 +318,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 89547483}
+      - m_Target: {fileID: 89547480}
         m_TargetAssemblyTypeName: PlayButtonScript, Assembly-CSharp
-        m_MethodName: PlayButton
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
