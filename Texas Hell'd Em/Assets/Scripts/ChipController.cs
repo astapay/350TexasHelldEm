@@ -10,9 +10,38 @@ public class ChipController : MonoBehaviour
 {
     private GameController gameController;
 
+    public float speed = 50.0f;
+    
+    [SerializeField] private SpriteRenderer SpriteRenderer;
+    [SerializeField] private Sprite[] chipSprites;
+    [SerializeField] private GameObject RedChipPF;
+    [SerializeField] private GameObject GreenChipPF;
+    [SerializeField] private GameObject BlackChipPF;
+    [SerializeField] private GameObject PurpleChipPF;
+    [SerializeField] private GameObject BlueChipPF;
+    [SerializeField] private GameObject WhiteChipPF;
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
+    }
+
+    private IEnumerator updateScoreText(Transform playerTransform)
+    {
+        float timeToReachPlayer = Vector3.Distance(transform.position, playerTransform.position) / speed;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < timeToReachPlayer)
+        {
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position, elapsedTime / timeToReachPlayer);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        int chipValue = GetChipValueByTag();
+
+        gameController.updateScoreText(chipValue);
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,7 +62,7 @@ public class ChipController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Collector"))
         {
             int chipValue = GetChipValueByTag();
-            gameController.updateScoreText(chipValue);
+                gameController.updateScoreText(chipValue);
             Destroy(gameObject);
         }
     }

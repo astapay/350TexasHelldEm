@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardController: {fileID: 487826034}
-  ChipController: {fileID: 0}
+  ChipController: {fileID: 605085039}
   PlayerController: {fileID: 2065167191}
   scoreText: {fileID: 201632979}
   chipCounterText: {fileID: 444691147}
@@ -523,6 +523,13 @@ MonoBehaviour:
   - {fileID: 761026777}
   score: 0
   cardPF: {fileID: 6745268308880181436, guid: df0c18c7904ef6342ae8bfc09e7a425a, type: 3}
+  chipPFs:
+  - {fileID: 8554184447001614751, guid: acc1aad0854341448b297b4f10022dbc, type: 3}
+  - {fileID: 771722100893319212, guid: 8e2ab3964448575448aa305eb21a5727, type: 3}
+  - {fileID: 387244297536880491, guid: c9cf03ac30c486d40803fc7b7294ce15, type: 3}
+  - {fileID: 8402325367830460559, guid: 46705e66e0d0f5c4da1b633c1629d78a, type: 3}
+  - {fileID: 9152702565394615084, guid: 6fe4ad2c1df57a048873d0fd48e30839, type: 3}
+  - {fileID: 2731249119986368032, guid: 6bb95e704ebb8074bab6d60d4f443ae3, type: 3}
 --- !u!1 &444691145
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +936,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e982c9b68453d4797b1c6a768481dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chipValue: 10
+  speed: 50
+  SpriteRenderer: {fileID: 0}
+  chipSprites:
+  - {fileID: 21300000, guid: db69220384d9d834d892c9ea23eb0393, type: 3}
+  - {fileID: 21300000, guid: 29727b15f639fb84b97ffecdb9ad4827, type: 3}
+  - {fileID: 21300000, guid: 982a4107328e31048baf4f5f0a61a6bd, type: 3}
+  - {fileID: 21300000, guid: 20399f867a23cd343a7f6a70bd97b609, type: 3}
+  - {fileID: 21300000, guid: 36a53d2e5e9039b45b4d07fc9ea45099, type: 3}
+  - {fileID: 21300000, guid: 86a50c04ee41fd841b733d3f8e9b5437, type: 3}
+  RedChipPF: {fileID: 9152702565394615084, guid: 6fe4ad2c1df57a048873d0fd48e30839, type: 3}
+  GreenChipPF: {fileID: 387244297536880491, guid: c9cf03ac30c486d40803fc7b7294ce15, type: 3}
+  BlackChipPF: {fileID: 8554184447001614751, guid: acc1aad0854341448b297b4f10022dbc, type: 3}
+  PurpleChipPF: {fileID: 8402325367830460559, guid: 46705e66e0d0f5c4da1b633c1629d78a, type: 3}
+  BlueChipPF: {fileID: 771722100893319212, guid: 8e2ab3964448575448aa305eb21a5727, type: 3}
+  WhiteChipPF: {fileID: 2731249119986368032, guid: 6bb95e704ebb8074bab6d60d4f443ae3, type: 3}
 --- !u!4 &605085040
 Transform:
   m_ObjectHideFlags: 0

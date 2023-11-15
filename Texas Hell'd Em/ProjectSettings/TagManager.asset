@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Shield
   - Collector
+  - WhiteChip
+  - RedChip
+  - PurpleChip
+  - GreenChip
+  - BlueChip
+  - BlackChip
   layers:
   - Default
   - TransparentFX
