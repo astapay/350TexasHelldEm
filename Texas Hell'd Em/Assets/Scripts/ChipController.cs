@@ -10,9 +10,35 @@ public class ChipController : MonoBehaviour
 {
     private GameController gameController;
 
-    private void Start()
+    public Sprite[] sprites;
+
+    public float speed = 50.0f;
+
+    public void SpawnAndAttackPlayer(Vector3 spawnPosition, Transform playerTransform)
     {
-        gameController = FindObjectOfType<GameController>();
+        GameObject chip = Instantiate(gameObject, spawnPosition, Quaternion.identity);
+        ChipController chipController = chip.GetComponent<ChipController>();
+        chipController.StartCoroutine(AttackPlayer(playerTransform));
+    }
+
+    private IEnumerator AttackPlayer(Transform playerTransform)
+    {
+        float timeToReachPlayer = Vector3.Distance(transform.position, playerTransform.position) / speed;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < timeToReachPlayer)
+        {
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position, elapsedTime / timeToReachPlayer);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Chip has reached the player, apply damage or do other actions
+        int chipValue = GetChipValueByTag();
+        // Call a method in your GameController or Player script to apply damage or handle the attack
+        gameController.AttackPlayer(chipValue);
+
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -43,7 +69,7 @@ public class ChipController : MonoBehaviour
         return collision.transform.position.x > transform.position.x;
     }
 
-    private int GetChipValueByTag()
+    public int GetChipValueByTag()
     {
         // Return the chip value based on the chip's tag
         switch (gameObject.tag)
