@@ -326,7 +326,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 89547483}
-        m_TargetAssemblyTypeName: PlayButtonScript, Assembly-CSharp
+        m_TargetAssemblyTypeName: ButtonScript, Assembly-CSharp
         m_MethodName: PlayButton
         m_Mode: 1
         m_Arguments:

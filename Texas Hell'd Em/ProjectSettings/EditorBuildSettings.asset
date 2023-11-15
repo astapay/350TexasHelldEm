@@ -6,17 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 96e2fc932f4fef64198bef1279b2ca6b
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 04a02f9a4c65e3a4a8556168ff4bd826
+    guid: 2f7fbe5a91f6e70409aa56eeeb45dfb6
   - enabled: 1
     path: Assets/Scenes/BulletHellScene.unity
-    guid: fc5b03c5c79dd704fb1eabb82a1906d2
+    guid: a7bdf6e515edbcf4780b1ae10f3d7b9e
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: fc338cea91902da419609b2b71cd2bc9
   - enabled: 1
     path: Assets/Scenes/CutScene.unity
-    guid: 2fe926a229845c4499f95b6e9746a7d0
+    guid: 22871f436c04d294d94e04727c2ca807
   - enabled: 1
     path: Assets/Scenes/TutorialMenu.unity
     guid: 2f0c19816d67d364891fd55c34afc1f9

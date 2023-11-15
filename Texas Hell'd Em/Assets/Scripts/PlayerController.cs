@@ -5,26 +5,58 @@
 // Summary:         Controls the player's actions. Includes finding the mouse
                     position to find where to target the shield.
 ******************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     public CardController CardController;
+    public PlayerInput playerInput;
+    private InputAction chooseLeft;
+    private InputAction chooseRight;
     CardData nullCard = new CardData(-1, -1);
     CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
     int selectedCard;
     int handLevel;
+
+    //card selector objects
+    [SerializeField] private GameObject RightCardIndicator;
+    [SerializeField] private GameObject LeftCardIndicator;
 
     // <summary>
     // Currently used for debugging to print our current poker hand
     // </summary>
     public void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
+        chooseLeft = playerInput.currentActionMap.FindAction("SelectCardZero");
+        chooseRight = playerInput.currentActionMap.FindAction("SelectCardOne");
+        chooseLeft.performed += chooseLeftPerformed;
+        chooseRight.performed += chooseRightPerformed;
         logHand();
+        RightCardIndicator.SetActive(false);
+        LeftCardIndicator.SetActive(true);
+    }
+
+    private void chooseRightPerformed(InputAction.CallbackContext context)
+    {
+        selectedCard = 1;
+        Debug.Log(selectedCard);
+        RightCardIndicator.SetActive(true);
+        LeftCardIndicator.SetActive(false);
+    }
+
+    private void chooseLeftPerformed(InputAction.CallbackContext context)
+    {
+        selectedCard = 0;
+        Debug.Log(selectedCard);
+        RightCardIndicator.SetActive(false);
+        LeftCardIndicator.SetActive(true);
     }
 
     // <summary>
@@ -80,4 +112,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Card slot " + i + ": " + hand[i].getRankName() + " of " + hand[i].getSuitName());
         }
     }
+
+
 }

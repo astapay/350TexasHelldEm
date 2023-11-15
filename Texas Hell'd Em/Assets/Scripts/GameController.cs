@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
 
             yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
         }
+        Debug.Log(spawns);
     }
 
     IEnumerator spawnChips() {
@@ -120,5 +121,32 @@ public class GameController : MonoBehaviour
             deck.Enqueue(allCards[i]);
         }
         return deck;
+    }
+
+    IEnumerator RiverFlipper()
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    break;
+                case 1:
+                    for (int j = 0; j < 3; j++) {
+                        riverUI[j].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[j].getSuit() * 13 + river[j].getRank()];
+                    }
+                    break;
+                case 2:
+                    riverUI[3].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[3].getSuit() * 13 + river[3].getRank()];
+
+                    break;
+                case 3:
+                    riverUI[4].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[4].getSuit() * 13 + river[4].getRank()];
+                    game = false;
+                    break;
+            }
+            yield return new WaitForSeconds(5);
+        }
+        Debug.Log("Game end");
     }
 }
