@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
     public Queue<CardData> deck;
     private CardData[] river = new CardData[5];
     [SerializeField] private GameObject cardPF;
+    [SerializeField] private GameObject[] chipPFs;
     private int chipValue;
 
     private void Start()
@@ -33,7 +34,7 @@ public class GameController : MonoBehaviour
             river[i] = deck.Dequeue();
         }
         StartCoroutine(CreateACard());
-        StartCoroutine(RiverFlipper());
+        StartCoroutine(spawnChips());
     }
 
     private void Update()
@@ -74,6 +75,17 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
         }
         Debug.Log(spawns);
+    }
+
+    IEnumerator spawnChips() {
+        while (true)
+        {
+            float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
+            Vector2 chipPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10);
+            GameObject chip = Instantiate(chipPFs[UnityEngine.Random.Range(0, 6)], chipPos, Quaternion.identity);
+            chip.GetComponent<Rigidbody2D>().velocity = new Vector2(chipPos.x / -10, chipPos.y / -10);                  //moves card toward player
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
     // <summary>
