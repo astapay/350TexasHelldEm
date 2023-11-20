@@ -20,6 +20,13 @@ public class ButtonScript : MonoBehaviour
     [SerializeField] private string poker = "PokerTutorial";
     [SerializeField] private string bulletHell = "BulletHellTutorial";
 
+    private GameController gameController;
+
+    public void Start()
+    {
+        gameController = FindObjectOfType<GameController>();
+    }
+
     // <summary>
     // Loads the game scene into the game
     // </summary>
@@ -82,5 +89,14 @@ public class ButtonScript : MonoBehaviour
     public void BulletHellButton()
     {
         SceneManager.LoadScene(bulletHell);
+    }
+
+
+    // <summary>
+    // Quits the game and exits the application
+    // </summary>
+    public void ContinueButton()
+    {
+        gameController.SetPaused(false);
     }
 }

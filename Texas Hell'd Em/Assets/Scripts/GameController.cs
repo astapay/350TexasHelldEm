@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject[] chipPFs;
     private int chipValue;
 
+    public bool paused;
+
+    [SerializeField] private Button continueBtn;
+    [SerializeField] private Button retryBtn;
+    [SerializeField] private Button quitBtn;
+
     private void Start()
     {
         score = 0;
@@ -35,6 +42,10 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(CreateACard());
         StartCoroutine(spawnChips());
+
+        continueBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
+        quitBtn.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -148,5 +159,28 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(5);
         }
         Debug.Log("Game end");
+    }
+
+
+    public void SetPaused(bool pauseStatus)
+    {
+        paused = pauseStatus;
+        if(paused == true)
+        {
+            continueBtn.gameObject.SetActive(true);
+            retryBtn.gameObject.SetActive(true);
+            quitBtn.gameObject.SetActive(true);
+        }
+        else
+        {
+            continueBtn.gameObject.SetActive(false);
+            retryBtn.gameObject.SetActive(false);
+            quitBtn.gameObject.SetActive(false);
+        }
+    }
+
+    public bool GetPaused()
+    {
+        return paused;
     }
 }

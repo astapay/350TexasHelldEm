@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public PlayerInput playerInput;
     private InputAction chooseLeft;
     private InputAction chooseRight;
+    private InputAction pauseToggle;
     CardData nullCard = new CardData(-1, -1);
     CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
     int selectedCard;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     //card selector objects
     [SerializeField] private GameObject RightCardIndicator;
     [SerializeField] private GameObject LeftCardIndicator;
+    private GameController gameController;
 
     // <summary>
     // Currently used for debugging to print our current poker hand
@@ -36,11 +38,26 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         chooseLeft = playerInput.currentActionMap.FindAction("SelectCardZero");
         chooseRight = playerInput.currentActionMap.FindAction("SelectCardOne");
+        pauseToggle = playerInput.currentActionMap.FindAction("PauseToggle");
         chooseLeft.performed += chooseLeftPerformed;
         chooseRight.performed += chooseRightPerformed;
+        pauseToggle.started += PauseToggleStarted;
         logHand();
         RightCardIndicator.SetActive(false);
         LeftCardIndicator.SetActive(true);
+        gameController = FindObjectOfType<GameController>();
+    }
+
+    private void PauseToggleStarted(InputAction.CallbackContext obj)
+    {
+        bool isPaused = gameController.GetPaused();
+        if (isPaused == true)
+        {
+            gameController.SetPaused(false);
+        }
+        else{
+            gameController.SetPaused(true);
+        }
     }
 
     private void chooseRightPerformed(InputAction.CallbackContext context)
@@ -58,6 +75,7 @@ public class PlayerController : MonoBehaviour
         RightCardIndicator.SetActive(false);
         LeftCardIndicator.SetActive(true);
     }
+
 
     // <summary>
     //returns the Player's hand array
@@ -113,5 +131,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        chooseLeft.performed -= chooseLeftPerformed;
+        chooseRight.performed -= chooseRightPerformed;
+        pauseToggle.started -= PauseToggleStarted;
+    }
 
 }
