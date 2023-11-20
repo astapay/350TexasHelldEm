@@ -24,6 +24,7 @@ public class PokerTutorialScript : MonoBehaviour
     [SerializeField] private Sprite eight;
     [SerializeField] private Sprite nine;
     [SerializeField] private Sprite ten;
+    [SerializeField] private Sprite eleven;
     //buttons
     [SerializeField] private GameObject next;
     [SerializeField] private GameObject prev;
@@ -80,11 +81,15 @@ public class PokerTutorialScript : MonoBehaviour
         else if (currPage == 9)
         {
             tutorial.GetComponent<SpriteRenderer>().sprite = nine;
-            next.SetActive(true);
         }
         else if (currPage == 10)
         {
             tutorial.GetComponent<SpriteRenderer>().sprite = ten;
+            next.SetActive(true);
+        }
+        else if (currPage == 11)
+        {
+            tutorial.GetComponent<SpriteRenderer>().sprite = eleven;
             next.SetActive(false);
         }
     }

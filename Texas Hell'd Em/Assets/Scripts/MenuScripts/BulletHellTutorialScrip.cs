@@ -18,6 +18,7 @@ public class BulletHellTutorialScrip : MonoBehaviour
     [SerializeField] private Sprite two;
     [SerializeField] private Sprite three;
     [SerializeField] private Sprite four;
+    [SerializeField] private Sprite five;
     //buttons
     [SerializeField] private GameObject next;
     [SerializeField] private GameObject prev;
@@ -51,11 +52,15 @@ public class BulletHellTutorialScrip : MonoBehaviour
         else if (currPage == 3)
         {
             tutorial.GetComponent<SpriteRenderer>().sprite = three;
-            next.SetActive(true);
         }
         else if (currPage == 4)
         {
             tutorial.GetComponent<SpriteRenderer>().sprite = four;
+            next.SetActive(true);
+        }
+        else if (currPage == 5)
+        {
+            tutorial.GetComponent<SpriteRenderer>().sprite = five;
             next.SetActive(false);
         }
     }
