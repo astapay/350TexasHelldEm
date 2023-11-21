@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private InputAction chooseLeft;
     private InputAction chooseRight;
     private InputAction pauseToggle;
+    private InputAction quit;
     CardData nullCard = new CardData(-1, -1);
     CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
     int selectedCard;
@@ -39,13 +40,21 @@ public class PlayerController : MonoBehaviour
         chooseLeft = playerInput.currentActionMap.FindAction("SelectCardZero");
         chooseRight = playerInput.currentActionMap.FindAction("SelectCardOne");
         pauseToggle = playerInput.currentActionMap.FindAction("PauseToggle");
+        quit = playerInput.currentActionMap.FindAction("Quit");
         chooseLeft.performed += chooseLeftPerformed;
         chooseRight.performed += chooseRightPerformed;
         pauseToggle.started += PauseToggleStarted;
+        quit.started += QuitStarted;
         logHand();
         RightCardIndicator.SetActive(false);
         LeftCardIndicator.SetActive(true);
         gameController = FindObjectOfType<GameController>();
+    }
+
+    private void QuitStarted(InputAction.CallbackContext obj)
+    {
+        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     private void PauseToggleStarted(InputAction.CallbackContext obj)
@@ -136,6 +145,7 @@ public class PlayerController : MonoBehaviour
         chooseLeft.performed -= chooseLeftPerformed;
         chooseRight.performed -= chooseRightPerformed;
         pauseToggle.started -= PauseToggleStarted;
+        quit.started -= QuitStarted;
     }
 
 }
