@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 /*
 * ******************************************************************
@@ -77,6 +78,16 @@ public class CutUiScript : MonoBehaviour
     private Sprite NPC3IndicatorSuit;
     private Sprite NPC3IndicatorHand;
 
+    //counter
+    int counter;
+
+    //ui
+    [SerializeField] private GameObject retryBtn;
+    [SerializeField] private GameObject menuBtn;
+    [SerializeField] private GameObject quitBtn;
+
+    [SerializeField] private TMP_Text score;
+
     private void Start()
     {
         //get cards from game
@@ -91,23 +102,64 @@ public class CutUiScript : MonoBehaviour
         riverCard4.GetComponent<SpriteRenderer>().sprite = riverCard4Sprite;
         riverCard5.GetComponent<SpriteRenderer>().sprite = riverCard5Sprite;
 
+        NPC1Indicator.SetActive(false);
+        NPC2Indicator.SetActive(false);
+        NPC3Indicator.SetActive(false);
+
+        retryBtn.SetActive(false);
+        menuBtn.SetActive(false);
+        quitBtn.SetActive(false);
+
+        counter = 0;
+
+        score.SetText("");
     }
 
     private void GetCardSprites()
     {
-        Sprite[] spriteSheet = gameController.GetCardSprites();
-        playerCard1Sprite = spriteSheet[1];
-        playerCard2Sprite = spriteSheet[2];
-        riverCard1Sprite = spriteSheet[3];
-        riverCard2Sprite = spriteSheet[4];
-        riverCard3Sprite = spriteSheet[5];
-        riverCard4Sprite = spriteSheet[6];
-        riverCard5Sprite = spriteSheet[7];
-        bot1Card1Sprite = spriteSheet[8];
-        bot1Card2Sprite = spriteSheet[9];
-        bot2Card1Sprite = spriteSheet[10];
-        bot2Card2Sprite = spriteSheet[11]; 
-        bot3Card1Sprite = spriteSheet[12];
-        bot3Card2Sprite = spriteSheet[13];
+        ////    Sprite[] spriteSheet = gameController.GetSprites();
+        ////    playerCard1Sprite = spriteSheet[0];
+        ////    playerCard2Sprite = spriteSheet[1];
+        ////    riverCard1Sprite = spriteSheet[2];
+        ////    riverCard2Sprite = spriteSheet[3];
+        ////    riverCard3Sprite = spriteSheet[4];
+        ////    riverCard4Sprite = spriteSheet[5];
+        ////    riverCard5Sprite = spriteSheet[6];
+        ////    bot1Card1Sprite = spriteSheet[7];
+        ////    bot1Card2Sprite = spriteSheet[8];
+        ////    bot2Card1Sprite = spriteSheet[9];
+        ////    bot2Card2Sprite = spriteSheet[10]; 
+        ////    bot3Card1Sprite = spriteSheet[11];
+        ////    bot3Card2Sprite = spriteSheet[12];
+    }
+
+    private void FixedUpdate()
+    {
+        counter++;
+
+        if(counter > 40)
+        {
+            NPC1Indicator.SetActive(true);
+            bot1Card1.GetComponent<SpriteRenderer>().sprite = bot1Card1Sprite;
+            bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+        }
+        else if (counter > 80)
+        {
+            NPC2Indicator.SetActive(true);
+            bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card1Sprite;
+            bot2Card2.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+        }
+        else if (counter > 120)
+        {
+            NPC3Indicator.SetActive(true);
+            bot3Card1.GetComponent<SpriteRenderer>().sprite = bot3Card1Sprite;
+            bot3Card2.GetComponent<SpriteRenderer>().sprite = bot3Card2Sprite;
+        }
+        else if (counter > 150)
+        {
+            retryBtn.SetActive(false);
+            menuBtn.SetActive(false);
+            quitBtn.SetActive(false);
+        }
     }
 }
