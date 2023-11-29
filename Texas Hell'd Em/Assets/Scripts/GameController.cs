@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour
     public TMP_Text chipCounterText; // Add a Text component to display the chip counter
     public GameObject[] handUI;
     public GameObject[] riverUI;
+    private CardData[] handAI1;
+    private CardData[] handAI2;
+    private CardData[] handAI3;
     public int score;
     private int chipCounter = 0; // New variable to keep track of collected chips
     private bool game = true;
@@ -85,7 +88,13 @@ public class GameController : MonoBehaviour
 
             yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
         }
-        Debug.Log(spawns);
+        for(int i = 0; i < 2;i++)
+        {
+            handAI1[i] = deck.Dequeue();
+            handAI2[i] = deck.Dequeue();
+            handAI3[i] = deck.Dequeue();
+
+        }
     }
 
     IEnumerator spawnChips() {
@@ -182,5 +191,15 @@ public class GameController : MonoBehaviour
     public bool GetPaused()
     {
         return paused;
+    }
+
+    public CardData[][] getAIHands()
+    {
+        return new CardData[][] { handAI1, handAI2, handAI3 };
+    }
+
+    public CardData[] getRiver()
+    {
+        return river;
     }
 }

@@ -12,6 +12,8 @@ summary: this is the script that is used swap out the ui for the cutscene when c
 public class CutUiScript : MonoBehaviour
 {
     GameController gameController;
+    CardController cardController;
+    PlayerController playerController;
 
     //player cards
     [SerializeField] private GameObject playerCard1;
@@ -117,20 +119,19 @@ public class CutUiScript : MonoBehaviour
 
     private void GetCardSprites()
     {
-        ////    Sprite[] spriteSheet = gameController.GetSprites();
-        ////    playerCard1Sprite = spriteSheet[0];
-        ////    playerCard2Sprite = spriteSheet[1];
-        ////    riverCard1Sprite = spriteSheet[2];
-        ////    riverCard2Sprite = spriteSheet[3];
-        ////    riverCard3Sprite = spriteSheet[4];
-        ////    riverCard4Sprite = spriteSheet[5];
-        ////    riverCard5Sprite = spriteSheet[6];
-        ////    bot1Card1Sprite = spriteSheet[7];
-        ////    bot1Card2Sprite = spriteSheet[8];
-        ////    bot2Card1Sprite = spriteSheet[9];
-        ////    bot2Card2Sprite = spriteSheet[10]; 
-        ////    bot3Card1Sprite = spriteSheet[11];
-        ////    bot3Card2Sprite = spriteSheet[12];
+        playerCard1Sprite = cardController.getCardSprite(playerController.getHand()[0]);
+        playerCard2Sprite = cardController.getCardSprite(playerController.getHand()[1]);
+        riverCard1Sprite = cardController.getCardSprite(gameController.getRiver()[0]);
+        riverCard2Sprite = cardController.getCardSprite(gameController.getRiver()[1]);
+        riverCard3Sprite = cardController.getCardSprite(gameController.getRiver()[2]);
+        riverCard4Sprite = cardController.getCardSprite(gameController.getRiver()[3]);
+        riverCard5Sprite = cardController.getCardSprite(gameController.getRiver()[4]);
+        bot1Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[0][0]);
+        bot1Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[0][1]);
+        bot2Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[1][0]);
+        bot2Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[1][1]);
+        bot3Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[2][0]);
+        bot3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
     }
 
     private void FixedUpdate()
