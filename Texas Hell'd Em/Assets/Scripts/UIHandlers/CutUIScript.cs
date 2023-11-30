@@ -92,8 +92,12 @@ public class CutUiScript : MonoBehaviour
 
     private void Start()
     {
+        gameController = FindObjectOfType<GameController>();
+        playerController = FindObjectOfType<PlayerController>();
+        cardController = FindObjectOfType<CardController>();
+
         //get cards from game
-        GetCardSprites();
+        SetSprites();
         //set player cards
         playerCard1.GetComponent<SpriteRenderer>().sprite = playerCard1Sprite;
         playerCard2.GetComponent<SpriteRenderer>().sprite = playerCard2Sprite;
@@ -114,10 +118,10 @@ public class CutUiScript : MonoBehaviour
 
         counter = 0;
 
-        score.SetText("");
+        score.SetText(gameController.score.ToString());
     }
 
-    private void GetCardSprites()
+    private void SetSprites()
     {
         playerCard1Sprite = cardController.getCardSprite(playerController.getHand()[0]);
         playerCard2Sprite = cardController.getCardSprite(playerController.getHand()[1]);
