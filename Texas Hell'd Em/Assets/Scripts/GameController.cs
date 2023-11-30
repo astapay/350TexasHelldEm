@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(CreateACard());
         StartCoroutine(spawnChips());
+        StartCoroutine(RiverFlipper());
 
         continueBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
