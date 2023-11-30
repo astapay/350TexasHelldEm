@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class GameController : MonoBehaviour
     private CardData[] handAI2;
     private CardData[] handAI3;
     public int score;
-    private int chipCounter = 0; // New variable to keep track of collected chips
+    public int chipCounter = 0; // New variable to keep track of collected chips
     private bool game = true;
 
     public Queue<CardData> deck;
@@ -33,8 +34,13 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button retryBtn;
     [SerializeField] private Button quitBtn;
 
+    public float timer;
+
+    [SerializeField] private TMP_Text timerText;
+
     private void Start()
     {
+        timer = 0f;
         score = 0;
         updateScoreText(chipValue);
         updateChipCounterText(); // Initialize the chip counter text
@@ -60,6 +66,7 @@ public class GameController : MonoBehaviour
                 handUI[i].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[PlayerController.getHand()[i].getSuit() * 13 + PlayerController.getHand()[i].getRank()];
             }
         }
+        timerText.SetText(timer.ToString("0.00"));
     }
 
     public void updateScoreText(int chipValue)
@@ -69,7 +76,7 @@ public class GameController : MonoBehaviour
 
     public void updateChipCounterText()
     {
-        chipCounterText.text = "Chips: " + chipCounter.ToString();
+        chipCounterText.text =  chipCounter.ToString();
     }
 
     public void UpdateChipCounter(int chipValue)
@@ -103,7 +110,7 @@ public class GameController : MonoBehaviour
             float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
             Vector2 chipPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10);
             GameObject chip = Instantiate(chipPFs[UnityEngine.Random.Range(0, 6)], chipPos, Quaternion.identity);
-            chip.GetComponent<Rigidbody2D>().velocity = new Vector2(chipPos.x / -10, chipPos.y / -10);                  //moves card toward player
+            chip.GetComponent<Rigidbody2D>().velocity = new Vector2(chipPos.x / -10, chipPos.y / -10);                  //moves chip toward player
             yield return new WaitForSeconds(.5f);
         }
     }
@@ -171,17 +178,18 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void SetPaused(bool pauseStatus)
+    public void TogglePaused()
     {
-        paused = pauseStatus;
-        if(paused == true)
+        if(paused == false)
         {
+            paused = true;
             continueBtn.gameObject.SetActive(true);
             retryBtn.gameObject.SetActive(true);
             quitBtn.gameObject.SetActive(true);
         }
         else
         {
+            paused = false;
             continueBtn.gameObject.SetActive(false);
             retryBtn.gameObject.SetActive(false);
             quitBtn.gameObject.SetActive(false);
@@ -201,5 +209,10 @@ public class GameController : MonoBehaviour
     public CardData[] getRiver()
     {
         return river;
+    }
+
+    private void FixedUpdate()
+    {
+        timer = timer + .02f;
     }
 }

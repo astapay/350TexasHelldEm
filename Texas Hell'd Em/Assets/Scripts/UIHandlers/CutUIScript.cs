@@ -118,7 +118,7 @@ public class CutUiScript : MonoBehaviour
 
         counter = 0;
 
-        score.SetText(gameController.score.ToString());
+        score.SetText(gameController.chipCounter.ToString());
     }
 
     private void SetSprites()

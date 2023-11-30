@@ -62,10 +62,10 @@ public class PlayerController : MonoBehaviour
         bool isPaused = gameController.GetPaused();
         if (isPaused == true)
         {
-            gameController.SetPaused(false);
+            gameController.TogglePaused();
         }
         else{
-            gameController.SetPaused(true);
+            gameController.TogglePaused();
         }
     }
 

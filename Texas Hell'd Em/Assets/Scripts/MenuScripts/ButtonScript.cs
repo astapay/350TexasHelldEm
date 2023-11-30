@@ -97,6 +97,6 @@ public class ButtonScript : MonoBehaviour
     // </summary>
     public void ContinueButton()
     {
-        gameController.SetPaused(false);
+        gameController.TogglePaused();
     }
 }
