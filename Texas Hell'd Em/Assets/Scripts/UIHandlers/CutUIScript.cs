@@ -89,6 +89,9 @@ public class CutUiScript : MonoBehaviour
     [SerializeField] private GameObject quitBtn;
 
     [SerializeField] private TMP_Text score;
+    [SerializeField] private TMP_Text WinLoseText;
+
+    public bool win;
 
     private void Start()
     {
@@ -98,6 +101,8 @@ public class CutUiScript : MonoBehaviour
 
         //get cards from game
         SetSprites();
+        //check win
+        CheckWin();
         //set player cards
         playerCard1.GetComponent<SpriteRenderer>().sprite = playerCard1Sprite;
         playerCard2.GetComponent<SpriteRenderer>().sprite = playerCard2Sprite;
@@ -115,6 +120,7 @@ public class CutUiScript : MonoBehaviour
         retryBtn.SetActive(false);
         menuBtn.SetActive(false);
         quitBtn.SetActive(false);
+        WinLoseText.gameObject.SetActive(false);
 
         counter = 0;
 
@@ -136,6 +142,18 @@ public class CutUiScript : MonoBehaviour
         bot2Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[1][1]);
         bot3Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[2][0]);
         bot3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
+    }
+
+    private void CheckWin()
+    {
+        if (win)
+        {
+            WinLoseText.SetText("You Win!!");
+        }
+        else
+        {
+            WinLoseText.SetText("You Lost!!");
+        }
     }
 
     private void FixedUpdate()
@@ -162,9 +180,10 @@ public class CutUiScript : MonoBehaviour
         }
         else if (counter > 150)
         {
-            retryBtn.SetActive(false);
-            menuBtn.SetActive(false);
-            quitBtn.SetActive(false);
+            WinLoseText.gameObject.SetActive(true);
+            retryBtn.SetActive(true);
+            menuBtn.SetActive(true);
+            quitBtn.SetActive(true);
         }
     }
 }
