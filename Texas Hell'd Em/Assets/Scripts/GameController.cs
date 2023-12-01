@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        timer = 0f;
+        timer = 20f;
         score = 0;
         updateScoreText(chipValue);
         updateChipCounterText(); // Initialize the chip counter text
@@ -214,6 +215,10 @@ public class GameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timer = timer + .02f;
+        timer = timer - .02f;
+        if(timer <= 0)
+        {
+            SceneManager.LoadScene("CutScene");
+        }
     }
 }
