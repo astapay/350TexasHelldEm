@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
     private int chipValue;
 
     public bool paused;
+    private int riverFlipperStage = 0;
 
     [SerializeField] private Button continueBtn;
     [SerializeField] private Button retryBtn;
@@ -52,7 +53,6 @@ public class GameController : MonoBehaviour
         }
         StartCoroutine(CreateACard());
         StartCoroutine(spawnChips());
-        StartCoroutine(RiverFlipper());
 
         continueBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
@@ -152,31 +152,28 @@ public class GameController : MonoBehaviour
         return deck;
     }
 
-    IEnumerator RiverFlipper()
+    void RiverFlipper()
     {
-        for(int i = 0; i < 4; i++)
+        switch (riverFlipperStage)
         {
-            switch (i)
-            {
-                case 0:
-                    break;
-                case 1:
-                    for (int j = 0; j < 3; j++) {
-                        riverUI[j].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[j].getSuit() * 13 + river[j].getRank()];
-                    }
-                    break;
-                case 2:
-                    riverUI[3].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[3].getSuit() * 13 + river[3].getRank()];
+            case 0:
+                break;
+            case 1:
+                for (int j = 0; j < 3; j++)
+                {
+                    riverUI[j].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[j].getSuit() * 13 + river[j].getRank()];
+                }
+                break;
+            case 2:
+                riverUI[3].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[3].getSuit() * 13 + river[3].getRank()];
 
-                    break;
-                case 3:
-                    riverUI[4].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[4].getSuit() * 13 + river[4].getRank()];
-                    game = false;
-                    break;
-            }
-            yield return new WaitForSeconds(5);
+                break;
+            case 3:
+                riverUI[4].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[4].getSuit() * 13 + river[4].getRank()];
+                game = false;
+                break;
         }
-        Debug.Log("Game end");
+        riverFlipperStage++;
     }
 
 
@@ -198,7 +195,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public bool GetPaused()
+    public bool IsPaused()
     {
         return paused;
     }
@@ -215,7 +212,16 @@ public class GameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timer = timer - .02f;
+        if(!paused)
+        {
+            timer = timer - .02f;
+        }
+
+        if (timer <= 20 - (riverFlipperStage * 5))
+        {
+            RiverFlipper();
+        }
+
         if(timer <= 0)
         {
             SceneManager.LoadScene("CutScene");

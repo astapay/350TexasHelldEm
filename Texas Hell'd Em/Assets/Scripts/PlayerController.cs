@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void PauseToggleStarted(InputAction.CallbackContext obj)
     {
-        bool isPaused = gameController.GetPaused();
+        bool isPaused = gameController.IsPaused();
         if (isPaused == true)
         {
             gameController.TogglePaused();

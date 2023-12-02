@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Card : MonoBehaviour
@@ -14,6 +15,7 @@ public class Card : MonoBehaviour
     private CardData cardStruct;
     private GameController gameController;
     private PlayerController playerController;
+    private Vector2 storedVelocity;
 
     // <summary>
     // Start is called before the first frame update
@@ -23,6 +25,22 @@ public class Card : MonoBehaviour
     {
         gameController = FindObjectOfType<GameController>();
         playerController = FindObjectOfType<PlayerController>();
+    }
+
+    // <summary>
+    // 
+    // </summary>
+    private void Update()
+    {
+        if (gameController.IsPaused() && gameObject.GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        {
+            storedVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+        else if (!gameController.IsPaused() && gameObject.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = storedVelocity;
+        }
     }
 
     // <summary>
