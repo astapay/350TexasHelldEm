@@ -28,7 +28,7 @@ public class Card : MonoBehaviour
     }
 
     // <summary>
-    // 
+    // Update checks if the game has been paused or unpaused, and stops/starts the card's velocity accordingly
     // </summary>
     private void Update()
     {

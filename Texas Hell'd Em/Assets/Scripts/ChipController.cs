@@ -20,9 +20,28 @@ public class ChipController : MonoBehaviour
     [SerializeField] private GameObject PurpleChipPF;
     [SerializeField] private GameObject BlueChipPF;
     [SerializeField] private GameObject WhiteChipPF;
+
+    private Vector2 storedVelocity;
+    [SerializeField] private bool isCardController;
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
+    }
+
+    // <summary>
+    // Update checks if the game has been paused or unpaused, and stops/starts the chip's velocity accordingly
+    // </summary>
+    private void Update()
+    {
+        if (!isCardController && gameController.IsPaused() && gameObject.GetComponent<Rigidbody2D>().velocity != Vector2.zero)
+        {
+            storedVelocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+        else if (!isCardController && !gameController.IsPaused() && gameObject.GetComponent<Rigidbody2D>().velocity == Vector2.zero)
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = storedVelocity;
+        }
     }
 
     private IEnumerator updateScoreText(Transform playerTransform)
@@ -89,7 +108,6 @@ public class ChipController : MonoBehaviour
                 return 50;
             case "BlueChip":
                 return 60;
-            // Add cases for other chip colors as needed
             default:
                 return 0;
         }
