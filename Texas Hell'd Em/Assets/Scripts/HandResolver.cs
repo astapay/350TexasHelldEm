@@ -6,39 +6,114 @@
 // Description:     A class that determines the winner between two poker hands.
                     Includes all of the necessary logic to do so.
 ******************************************************************************/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEngine.XR;
 
 public class HandResolver
 {
     // <summary>
-    // Determines the winner of two inputted hands
+    // Determines the winner of multiple inputted hands
     // </summary>
-    // <param name="hand1"> The first hand to evaluate </param>
-    // <param name="hand2"> The second hand to evaluate </param>
-    // <returns> true if hand1 wins or ties against hand2,
-    // or false otherwise </returns>
-    public bool ResolveHands(CardData[] hand1, CardData[] hand2)
+    // <param name="hand1"> The array of hands to evaluate </param>
+    // <returns> A tuple of types int and int.
+    // The first value represents the player that won the poker game
+    // The second value represents the type of hand that player won with
+    // </returns>
+    public Tuple<int,int> ResolveHands(CardData[][] hands)
     {
-        // Find the values of each hand
-        int hand1Result = FindHand(hand1);
-        int hand2Result = FindHand(hand2);
+        // Sort each hand
+        hands = SortHands(hands);
 
-        // Compare the strengths of the hands
-        if (hand1Result > hand2Result)
+        // Find the values of each hand
+        int[] handResults = new int[hands.Length];
+
+        for(int i = 0;i < hands.Length;i++)
         {
-            return true;
+            handResults[i] = FindHand(hands[i]);
         }
-        else if (hand1Result < hand2Result)
+
+        // Find the strongest hand in the game
+        int bestHandIndex = 0;
+        
+        for(int i = 1;i < hands.Length;i++)
         {
-            return false;
+            if (handResults[i] > handResults[bestHandIndex])
+            {
+                bestHandIndex = i;
+            }
+        }
+
+        // We also need to check for ties
+        CardData[][] tiedHands = new CardData[0][];
+
+        for(int i = 0;i < hands.Length;i++)
+        {
+            if (handResults[i] == handResults[bestHandIndex])
+            {
+                CardData[][] temp = new CardData[tiedHands.Length + 1][];
+
+                for(int j = 0;j < tiedHands.Length;j++)
+                {
+                    temp[j] = tiedHands[j];
+                }
+
+                temp[tiedHands.Length] = hands[i];
+
+                tiedHands = temp;
+            }
+        }
+
+        // If we only have 1 hand with the best value, then that is our winner
+        // Otherwise, we need to go to the tiebreaker
+        if(tiedHands.Length == 1)
+        {
+            return new Tuple<int, int>(bestHandIndex, 
+                handResults[bestHandIndex]);
         }
         else
         {
-            // If we have the same type of hand, we must go to a tiebreaker
-            return Tiebreaker(hand1, hand2, hand1Result);
+            // Find which hand won the tiebreaker
+            int handInTied = Tiebreaker(tiedHands, handResults[bestHandIndex]);
+
+            // Find which hand won in the original array
+            for(int i = 0;i < hands.Length;i++)
+            {
+                bool found = true;
+
+                // If any card in this hand is different, we haven't found
+                // the correct hand
+                for(int j = 0;i < hands[i].Length;j++)
+                {
+                    if (hands[i][j].getRank() != 
+                        tiedHands[handInTied][j].getRank())
+                    {
+                        found = false;
+                        break;
+                    }
+
+                    if (hands[i][j].getSuit() !=
+                        tiedHands[handInTied][j].getSuit())
+                    {
+                        found = false;
+                        break;
+                    }
+                }
+
+                // If we found it, we may return the winner
+                if(found)
+                {
+                    return new Tuple<int, int>(i, handResults[bestHandIndex]);
+                }
+            }
         }
+
+        // Technically speaking, we should never reach this line of code
+        // Still, if all else fails, we'll just send a default value
+        return new Tuple<int, int>(0, 0);
     }
 
     // <summary>
@@ -48,9 +123,6 @@ public class HandResolver
     // <returns> An int representing the general strength of hand </returns>
     private int FindHand(CardData[] hand)
     {
-        // To make things easier, let's sort the hand
-        hand = SortHand(hand);
-
         // We need to find a few values of our particular hand
         // See descriptions of the methods below
         bool flush = FindFlush(hand);
@@ -101,35 +173,40 @@ public class HandResolver
     // </summary>
     // <param name="hand"> The array to be sorted </param>
     // <returns> The original array, now sorted </returns>
-    private CardData[] SortHand(CardData[] hand)
+    private CardData[][] SortHands(CardData[][] hands)
     {
-        // Control variable to keep track of how long we need to sort
-        bool changesMade = true;
-
-        // Loop until we no longer make new changes
-        while(changesMade)
+        // Loop to sort each row of our hands array
+        for(int i = 0;i < hands.Length;i++)
         {
-            // Set control variable to false
-            changesMade = false;
+            // Control variable to keep track of how long we need to sort
+            bool changesMade = true;
 
-            // Loop through array
-            for(int i = 1; i < hand.Length; i++)
+            // Loop until we no longer make new changes
+            while (changesMade)
             {
-                // If we find a rank out of place, swap places
-                // We also made a change, so set the control variable to true
-                if (hand[i-1].getRank() < hand[i].getRank())
-                {
-                    CardData temp = hand[i];
-                    hand[i] = hand[i-1];
-                    hand[i-1] = temp;
+                // Set control variable to false
+                changesMade = false;
 
-                    changesMade = true;
+                // Loop through array
+                for (int j = 1; j < hands[i].Length; j++)
+                {
+                    // If we find a rank out of place, swap places
+                    // We also made a change, so set the control variable to true
+                    if (hands[i][j - 1].getRank() < hands[i][j].getRank())
+                    {
+                        CardData temp = hands[i][j];
+                        hands[i][j] = hands[i][j - 1];
+                        hands[i][j - 1] = temp;
+
+                        changesMade = true;
+                    }
                 }
             }
         }
+        
 
         // Return the array, which is now sorted
-        return hand;
+        return hands;
     }
 
     // <summary>
@@ -458,227 +535,77 @@ public class HandResolver
     // <summary>
     // Decides on which hand wins when they have the same hand type
     // </summary>
-    // <param name="hand1"> The first hand to evaluate </param>
-    // <param name="hand2"> The second hand to evaluate </param>
+    // <param name="hands"> The array of hands to evaluate </param>
     // <param name="handType"> The type of hand that the two hands share </param>
-    // <returns> true if hand1 wins or ties against hand2,
-    // or false otherwise </returns>
-    private bool Tiebreaker(CardData[] hand1, CardData[] hand2, int handType)
+    // <returns> the index of the winning hand in the inputted array </returns>
+    private int Tiebreaker(CardData[][] hands, int handType)
     {
-        // Since we don't use references to the hands for sorting,
-        // we will need to sort the hands again
-        hand1 = SortHand(hand1);
-        hand2 = SortHand(hand2);
+        // We will sort the hands again just in case
+        hands = SortHands(hands);
 
         // We will break the tie based on handType
         switch(handType)
         {
             case 0: //High Card
                 {
-                    // We simply loop through each hand
-                    // Whichever finds the higher card first wins
-                    for (int i = 0; i < hand1.Length; i++)
+                    // We will evaluate each hand one-on-one and keep track of
+                    // who is winning
+                    int winningHand = 0;
+
+                    for(int i = 1;i < hands.Length;i++)
                     {
-                        if (hand1[i].getRank() > hand2[i].getRank())
+                        bool temp = TiebreakerHigh(hands[winningHand], hands[i]);
+
+                        // If the new hand beat winningHand, set winningHand to that
+                        if(!temp)
                         {
-                            return true;
-                        }
-                        else if (hand1[i].getRank() < hand2[i].getRank())
-                        {
-                            return false;
+                            winningHand = i;
                         }
                     }
 
-                    // If that failed, we tied
-                    return true;
+                    // Return the winning hand
+                    return winningHand;
                 }
                 break;
             case 1: //One Pair
             case 2: //Two Pair
                 {
-                    // We can do these with the same code due to the nature
-                    // of FindPairIndex
-                    int[] pairIndex1 = FindPairIndex(hand1);
-                    int[] pairIndex2 = FindPairIndex(hand2);
+                    // The strategy for the rest of these cases will generally
+                    // be the same as what we did for high card
+                    // The only changes that we're making is the sub-tiebreaker
+                    // method we will call
+                    // As such, we are essentially doing the same thing for
+                    // the rest of this method
+                    int winningHand = 0;
 
-                    // The higher pair wins the tie
-                    if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        return true;
-                    }
-                    else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
-                    {
-                        return false;
-                    }
-                    // If that didn't break it, we will check to see
-                    // if we had two pair
-                    else if (pairIndex1.Length >= 2)
-                    {
-                        // The next pairs will attempt to break the tie now
-                        if (hand1[pairIndex1[1]].getRank() > hand2[pairIndex2[1]].getRank())
+                        bool temp = TiebreakerPair(hands[winningHand], hands[i]);
+
+                        if (!temp)
                         {
-                            return true;
-                        }
-                        else if (hand1[pairIndex1[1]].getRank() < hand2[pairIndex2[1]].getRank())
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            // All of that failed, so now we need to find the
-                            // "kicker", the next highest card that is not
-                            // included in the pairs
-                            // Looping variables
-                            int i = 0;
-                            int j = 0;
-                            int nextIndex1 = 0;
-                            int nextIndex2 = 0;
-
-                            // Loop through hands 1 and 2
-                            do
-                            {
-                                // When we are at an index that corresponds
-                                // to a pair, we will skip it
-                                while(nextIndex1 < pairIndex1.Length && i == pairIndex1[nextIndex1])
-                                {
-                                    i += 2;
-                                    nextIndex1++;
-                                }
-
-                                // Do the same for hand2
-                                while (nextIndex2 < pairIndex2.Length && j == pairIndex2[nextIndex2])
-                                {
-                                    j += 2;
-                                    nextIndex2++;
-                                }
-
-                                // Check the ranks
-                                if (i < hand1.Length && j < hand2.Length)
-                                {
-                                    if (hand1[i].getRank() > hand2[j].getRank())
-                                    {
-                                        return true;
-                                    }
-                                    else if (hand1[i].getRank() < hand2[j].getRank())
-                                    {
-                                        return false;
-                                    }
-                                }
-
-                                i++;
-                                j++;
-                            } while (i < hand1.Length && j < hand1.Length);
-
-                            // If that failed, we tied
-                            return true;
+                            winningHand = i;
                         }
                     }
-                    else
-                    {
-                        // All of that failed, so now we need to find the
-                        // "kicker", the next highest card that is not
-                        // included in the pairs
-                        // Looping variables
-                        int i = 0;
-                        int j = 0;
-                        int nextIndex1 = 0;
-                        int nextIndex2 = 0;
 
-                        // Loop through hands 1 and 2
-                        do
-                        {
-                            // When we are at an index that corresponds
-                            // to a pair, we will skip it
-                            while (nextIndex1 < pairIndex1.Length && i == pairIndex1[nextIndex1])
-                            {
-                                i += 2;
-                                nextIndex1++;
-                            }
-
-                            // Do the same for hand2
-                            while (nextIndex2 < pairIndex2.Length && j == pairIndex2[nextIndex2])
-                            {
-                                j += 2;
-                                nextIndex2++;
-                            }
-
-                            // Check the ranks
-                            if (i < hand1.Length && j < hand2.Length)
-                            {
-                                if (hand1[i].getRank() > hand2[j].getRank())
-                                {
-                                    return true;
-                                }
-                                else if (hand1[i].getRank() < hand2[j].getRank())
-                                {
-                                    return false;
-                                }
-                            }
-
-                            i++;
-                            j++;
-                        } while (i < hand1.Length && j < hand2.Length);
-
-                        // If that failed, we tied
-                        return true;
-                    }
+                    return winningHand;
                 }
                 break;
             case 3: //3 of a Kind
                 {
-                    // We'll find the indices of the 3 of a Kinds
-                    int kindIndex1 = FindOfAKindIndex(hand1);
-                    int kindIndex2 = FindOfAKindIndex(hand2);
+                    int winningHand = 0;
 
-                    // Now, we check the ranks of the 3 of a Kinds
-                    // Higher rank wins
-                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        return true;
-                    }
-                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        // That failed, so now we find the kicker again
-                        // We can do this in a simplified way of the way we
-                        // did it for pairs
-                        int i = 0;
-                        int j = 0;
+                        bool temp = TiebreakerThree(hands[winningHand], hands[i]);
 
-                        do
+                        if (!temp)
                         {
-                            if (i == kindIndex1)
-                            {
-                                i += 3;
-                            }
-
-                            if (j == kindIndex2)
-                            {
-                                j += 3;
-                            }
-
-                            if (i < hand1.Length && j < hand2.Length)
-                            {
-                                if (hand1[i].getRank() > hand2[j].getRank())
-                                {
-                                    return true;
-                                }
-                                else if (hand1[i].getRank() < hand2[j].getRank())
-                                {
-                                    return false;
-                                }
-                            }
-
-                            i++;
-                            j++;
-                        } while (i < hand1.Length && j < hand2.Length);
-
-                        // That failed, so we tied
-                        return true;
+                            winningHand = i;
+                        }
                     }
+
+                    return winningHand;
                 }
                 break;
             case 4: //Straight
@@ -686,139 +613,421 @@ public class HandResolver
                 {
                     // According to the rules of poker, these are compared
                     // the same way
-                    // Find the indices of the Straights
-                    int straightIndex1 = FindStraightIndex(hand1);
-                    int straightIndex2 = FindStraightIndex(hand2);
+                    int winningHand = 0;
 
-                    // Compare the ranks of the highest Cards of the Straights
-                    if (hand1[straightIndex1].getRank() > hand2[straightIndex2].getRank())
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        return true;
-                    }
-                    else if (hand1[straightIndex1].getRank() < hand2[straightIndex2].getRank())
-                    {
-                        return false;
+                        bool temp = TiebreakerStraight(hands[winningHand], hands[i]);
+
+                        if (!temp)
+                        {
+                            winningHand = i;
+                        }
                     }
 
-                    // If that failed, we tied
-                    return true;
+                    return winningHand;
                 }
                 break;
             case 5: //Flush
                 {
-                    // Find the indices of the Flushes
-                    int flushIndex1 = FindFlushIndex(hand1);
-                    int flushIndex2 = FindFlushIndex(hand2);
+                    int winningHand = 0;
 
-                    // We also need to know what suit the Flushes are
-                    int suit1 = hand1[flushIndex1].getSuit();
-                    int suit2 = hand2[flushIndex2].getSuit();
-
-                    // Loop through the hands
-                    do
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        // We need to make sure we are selecting the right
-                        // Card to test
-                        // So, we skip cards until we find the correct suit
-                        while (flushIndex1 < hand1.Length && 
-                            hand1[flushIndex1].getSuit() != suit1)
+                        bool temp = TiebreakerFlush(hands[winningHand], hands[i]);
+
+                        if (!temp)
                         {
-                            flushIndex1++;
+                            winningHand = i;
                         }
+                    }
 
-                        // Do the same for hand2
-                        while (flushIndex2 < hand2.Length && 
-                            hand2[flushIndex2].getSuit() != suit2)
-                        {
-                            flushIndex2++;
-                        }
-
-                        // Compare ranks
-                        if (flushIndex1 < hand1.Length && flushIndex2 < hand2.Length)
-                        {
-                            if (hand1[flushIndex1].getRank() > hand2[flushIndex2].getRank())
-                            {
-                                return true;
-                            }
-                            else if (hand1[flushIndex1].getRank() < hand2[flushIndex2].getRank())
-                            {
-                                return false;
-                            }
-                        }
-
-                        flushIndex1++;
-                        flushIndex2++;
-                    } while (flushIndex1 < hand1.Length && flushIndex2 < hand2.Length);
-
-                    // If that failed, 
-                    return true;
+                    return winningHand;
                 }
                 break;
             case 6: //Full House
                 {
-                    // First, we compare the 3 of a Kind that makes up the
-                    // Full House
-                    // Get the indices
-                    int kindIndex1 = FindOfAKindIndex(hand1);
-                    int kindIndex2 = FindOfAKindIndex(hand2);
+                    int winningHand = 0;
 
-                    // Compare the ranks
-                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        return true;
-                    }
-                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        // If that failed, we now compare the Pair
-                        int[] pairIndex1 = FindPairIndex(hand1);
-                        int[] pairIndex2 = FindPairIndex(hand2);
+                        bool temp = TiebreakerFull(hands[winningHand], hands[i]);
 
-                        if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
+                        if (!temp)
                         {
-                            return true;
-                        }
-                        else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
-                        {
-                            return false;
+                            winningHand = i;
                         }
                     }
 
-                    // If that failed, we tied
-                    return true;
+                    return winningHand;
                 }
                 break;
             case 7: //4 of a Kind
                 {
-                    // Find the indices
-                    int kindIndex1 = FindOfAKindIndex(hand1);
-                    int kindIndex2 = FindOfAKindIndex(hand2);
+                    int winningHand = 0;
 
-                    // Compare the ranks
-                    if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+                    for (int i = 1; i < hands.Length; i++)
                     {
-                        return true;
-                    }
-                    else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
-                    {
-                        return false;
+                        bool temp = TiebreakerFour(hands[winningHand], hands[i]);
+
+                        if (!temp)
+                        {
+                            winningHand = i;
+                        }
                     }
 
-                    // We really really should not reach this line of code
-                    // since there cannot be two of the same 4 of a Kinds with
-                    // only one deck
-                    // Still, just in case, otherwise we tie
-                    return true;
+                    return winningHand;
                 }
                 break;
             default:
                 break;
         }
 
-        // If something terrible happened, return false
-        return false;
+        // If something terrible happened, return 0
+        return 0;
+    }
+
+    /// <summary>
+    /// Handles the logic of a tiebreaker under High Card rules between
+    /// two hands
+    /// </summary>
+    /// <param name="hand1"> The first hand to evaluate </param>
+    /// <param name="hand2"> The seconde hand to evaluate </param>
+    /// <returns> true if hand1 defeats hand2, false otherwise </returns>
+    private bool TiebreakerHigh(CardData[] hand1, CardData[] hand2)
+    {
+        // We simply loop through each hand
+        // Whichever finds the higher card first wins
+        for (int i = 0; i < hand1.Length; i++)
+        {
+            if (hand1[i].getRank() > hand2[i].getRank())
+            {
+                return true;
+            }
+            else if (hand1[i].getRank() < hand2[i].getRank())
+            {
+                return false;
+            }
+        }
+
+        // If that failed, we tied
+        return true;
+    }
+
+    private bool TiebreakerPair(CardData[] hand1, CardData[] hand2)
+    {
+        // We can do these with the same code due to the nature
+        // of FindPairIndex
+        int[] pairIndex1 = FindPairIndex(hand1);
+        int[] pairIndex2 = FindPairIndex(hand2);
+
+        // The higher pair wins the tie
+        if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
+        {
+            return true;
+        }
+        else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
+        {
+            return false;
+        }
+        // If that didn't break it, we will check to see
+        // if we had two pair
+        else if (pairIndex1.Length >= 2)
+        {
+            // The next pairs will attempt to break the tie now
+            if (hand1[pairIndex1[1]].getRank() > hand2[pairIndex2[1]].getRank())
+            {
+                return true;
+            }
+            else if (hand1[pairIndex1[1]].getRank() < hand2[pairIndex2[1]].getRank())
+            {
+                return false;
+            }
+            else
+            {
+                // All of that failed, so now we need to find the
+                // "kicker", the next highest card that is not
+                // included in the pairs
+                // Looping variables
+                int i = 0;
+                int j = 0;
+                int nextIndex1 = 0;
+                int nextIndex2 = 0;
+
+                // Loop through hands 1 and 2
+                do
+                {
+                    // When we are at an index that corresponds
+                    // to a pair, we will skip it
+                    while (nextIndex1 < pairIndex1.Length && i == pairIndex1[nextIndex1])
+                    {
+                        i += 2;
+                        nextIndex1++;
+                    }
+
+                    // Do the same for hand2
+                    while (nextIndex2 < pairIndex2.Length && j == pairIndex2[nextIndex2])
+                    {
+                        j += 2;
+                        nextIndex2++;
+                    }
+
+                    // Check the ranks
+                    if (i < hand1.Length && j < hand2.Length)
+                    {
+                        if (hand1[i].getRank() > hand2[j].getRank())
+                        {
+                            return true;
+                        }
+                        else if (hand1[i].getRank() < hand2[j].getRank())
+                        {
+                            return false;
+                        }
+                    }
+
+                    i++;
+                    j++;
+                } while (i < hand1.Length && j < hand1.Length);
+
+                // If that failed, we tied
+                return true;
+            }
+        }
+        else
+        {
+            // All of that failed, so now we need to find the
+            // "kicker", the next highest card that is not
+            // included in the pairs
+            // Looping variables
+            int i = 0;
+            int j = 0;
+            int nextIndex1 = 0;
+            int nextIndex2 = 0;
+
+            // Loop through hands 1 and 2
+            do
+            {
+                // When we are at an index that corresponds
+                // to a pair, we will skip it
+                while (nextIndex1 < pairIndex1.Length && i == pairIndex1[nextIndex1])
+                {
+                    i += 2;
+                    nextIndex1++;
+                }
+
+                // Do the same for hand2
+                while (nextIndex2 < pairIndex2.Length && j == pairIndex2[nextIndex2])
+                {
+                    j += 2;
+                    nextIndex2++;
+                }
+
+                // Check the ranks
+                if (i < hand1.Length && j < hand2.Length)
+                {
+                    if (hand1[i].getRank() > hand2[j].getRank())
+                    {
+                        return true;
+                    }
+                    else if (hand1[i].getRank() < hand2[j].getRank())
+                    {
+                        return false;
+                    }
+                }
+
+                i++;
+                j++;
+            } while (i < hand1.Length && j < hand2.Length);
+
+            // If that failed, we tied
+            return true;
+        }
+    }
+
+    private bool TiebreakerThree(CardData[] hand1, CardData[] hand2)
+    {
+        // We'll find the indices of the 3 of a Kinds
+        int kindIndex1 = FindOfAKindIndex(hand1);
+        int kindIndex2 = FindOfAKindIndex(hand2);
+
+        // Now, we check the ranks of the 3 of a Kinds
+        // Higher rank wins
+        if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+        {
+            return true;
+        }
+        else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
+        {
+            return false;
+        }
+        else
+        {
+            // That failed, so now we find the kicker again
+            // We can do this in a simplified way of the way we
+            // did it for pairs
+            int i = 0;
+            int j = 0;
+
+            do
+            {
+                if (i == kindIndex1)
+                {
+                    i += 3;
+                }
+
+                if (j == kindIndex2)
+                {
+                    j += 3;
+                }
+
+                if (i < hand1.Length && j < hand2.Length)
+                {
+                    if (hand1[i].getRank() > hand2[j].getRank())
+                    {
+                        return true;
+                    }
+                    else if (hand1[i].getRank() < hand2[j].getRank())
+                    {
+                        return false;
+                    }
+                }
+
+                i++;
+                j++;
+            } while (i < hand1.Length && j < hand2.Length);
+
+            // If that failed, we tied
+            return true;
+        }
+    }
+
+    private bool TiebreakerStraight(CardData[] hand1, CardData[] hand2)
+    {
+        // Find the indices of the Straights
+        int straightIndex1 = FindStraightIndex(hand1);
+        int straightIndex2 = FindStraightIndex(hand2);
+
+        // Compare the ranks of the highest Cards of the Straights
+        if (hand1[straightIndex1].getRank() > hand2[straightIndex2].getRank())
+        {
+            return true;
+        }
+        else if (hand1[straightIndex1].getRank() < hand2[straightIndex2].getRank())
+        {
+            return false;
+        }
+
+        // If that failed, we tied
+        return true;
+    }
+
+    private bool TiebreakerFlush(CardData[] hand1, CardData[] hand2)
+    {
+        // Find the indices of the Flushes
+        int flushIndex1 = FindFlushIndex(hand1);
+        int flushIndex2 = FindFlushIndex(hand2);
+
+        // We also need to know what suit the Flushes are
+        int suit1 = hand1[flushIndex1].getSuit();
+        int suit2 = hand2[flushIndex2].getSuit();
+
+        // Loop through the hands
+        do
+        {
+            // We need to make sure we are selecting the right
+            // Card to test
+            // So, we skip cards until we find the correct suit
+            while (flushIndex1 < hand1.Length &&
+                hand1[flushIndex1].getSuit() != suit1)
+            {
+                flushIndex1++;
+            }
+
+            // Do the same for hand2
+            while (flushIndex2 < hand2.Length &&
+                hand2[flushIndex2].getSuit() != suit2)
+            {
+                flushIndex2++;
+            }
+
+            // Compare ranks
+            if (flushIndex1 < hand1.Length && flushIndex2 < hand2.Length)
+            {
+                if (hand1[flushIndex1].getRank() > hand2[flushIndex2].getRank())
+                {
+                    return true;
+                }
+                else if (hand1[flushIndex1].getRank() < hand2[flushIndex2].getRank())
+                {
+                    return false;
+                }
+            }
+
+            flushIndex1++;
+            flushIndex2++;
+        } while (flushIndex1 < hand1.Length && flushIndex2 < hand2.Length);
+
+        // If that failed, we tied
+        return true;
+    }
+
+    private bool TiebreakerFull(CardData[] hand1, CardData[] hand2)
+    {
+        // First, we compare the 3 of a Kind that makes up the
+        // Full House
+        // Get the indices
+        int kindIndex1 = FindOfAKindIndex(hand1);
+        int kindIndex2 = FindOfAKindIndex(hand2);
+
+        // Compare the ranks
+        if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+        {
+            return true;
+        }
+        else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
+        {
+            return false;
+        }
+        else
+        {
+            // If that failed, we now compare the Pair
+            int[] pairIndex1 = FindPairIndex(hand1);
+            int[] pairIndex2 = FindPairIndex(hand2);
+
+            if (hand1[pairIndex1[0]].getRank() > hand2[pairIndex2[0]].getRank())
+            {
+                return true;
+            }
+            else if (hand1[pairIndex1[0]].getRank() < hand2[pairIndex2[0]].getRank())
+            {
+                return false;
+            }
+        }
+
+        // If that failed, we tied
+        return true;
+    }
+
+    private bool TiebreakerFour(CardData[] hand1, CardData[] hand2)
+    {
+        // Find the indices
+        int kindIndex1 = FindOfAKindIndex(hand1);
+        int kindIndex2 = FindOfAKindIndex(hand2);
+
+        // Compare the ranks
+        if (hand1[kindIndex1].getRank() > hand2[kindIndex2].getRank())
+        {
+            return true;
+        }
+        else if (hand1[kindIndex1].getRank() < hand2[kindIndex2].getRank())
+        {
+            return false;
+        }
+
+        // We really really should not reach this line of code
+        // since there cannot be two of the same 4 of a Kinds with
+        // only one deck
+        // Still, just in case, otherwise we tied
+        return true;
     }
 }
