@@ -1351,6 +1351,7 @@ MonoBehaviour:
   PurpleChipPF: {fileID: 8402325367830460559, guid: 46705e66e0d0f5c4da1b633c1629d78a, type: 3}
   BlueChipPF: {fileID: 771722100893319212, guid: 8e2ab3964448575448aa305eb21a5727, type: 3}
   WhiteChipPF: {fileID: 2731249119986368032, guid: 6bb95e704ebb8074bab6d60d4f443ae3, type: 3}
+  isCardController: 1
 --- !u!4 &605085040
 Transform:
   m_ObjectHideFlags: 0

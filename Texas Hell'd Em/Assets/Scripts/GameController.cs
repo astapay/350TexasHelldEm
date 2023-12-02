@@ -92,10 +92,17 @@ public class GameController : MonoBehaviour
         int spawns = 0;
         while (game)
         {
-            CardController.createCard(deck);
-            spawns++;
+            if (paused)
+            {
+                yield return new WaitForNextFrameUnit();
+            }
+            else
+            {
+                CardController.createCard(deck);
+                spawns++;
 
-            yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
+                yield return new WaitForSeconds(MathF.Exp((spawns - 1) / 20));
+            }
         }
         for(int i = 0; i < 2;i++)
         {
@@ -107,13 +114,20 @@ public class GameController : MonoBehaviour
     }
 
     IEnumerator spawnChips() {
-        while (true)
+        while (game)
         {
-            float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
-            Vector2 chipPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10);
-            GameObject chip = Instantiate(chipPFs[UnityEngine.Random.Range(0, 6)], chipPos, Quaternion.identity);
-            chip.GetComponent<Rigidbody2D>().velocity = new Vector2(chipPos.x / -10, chipPos.y / -10);                  //moves chip toward player
-            yield return new WaitForSeconds(.5f);
+            if (paused)
+            {
+                yield return new WaitForNextFrameUnit();
+            }
+            else
+            {
+                float angle = UnityEngine.Random.Range(0, 2 * Mathf.PI);
+                Vector2 chipPos = new Vector2(Mathf.Sin(angle) * 10, Mathf.Cos(angle) * 10);
+                GameObject chip = Instantiate(chipPFs[UnityEngine.Random.Range(0, 6)], chipPos, Quaternion.identity);
+                chip.GetComponent<Rigidbody2D>().velocity = new Vector2(chipPos.x / -10, chipPos.y / -10);                  //moves chip toward player
+                yield return new WaitForSeconds(.5f);
+            }
         }
     }
 
