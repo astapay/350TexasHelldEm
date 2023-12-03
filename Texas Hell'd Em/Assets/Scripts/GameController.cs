@@ -40,8 +40,11 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private TMP_Text timerText;
 
+    [SerializeField] private GameObject cutScene;
+
     private void Start()
     {
+        cutScene.SetActive(false);
         timer = 20f;
         score = 0;
         updateScoreText(chipValue);
@@ -224,6 +227,16 @@ public class GameController : MonoBehaviour
         return river;
     }
 
+    private void GameEnd()
+    {
+        paused = true;
+        continueBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
+        quitBtn.gameObject.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+        chipCounterText.gameObject.SetActive(false);
+}
+
     private void FixedUpdate()
     {
         if(!paused)
@@ -238,7 +251,10 @@ public class GameController : MonoBehaviour
 
         if(timer <= 0)
         {
-            SceneManager.LoadScene("CutScene");
+            cutScene.SetActive(true);
+            game = false;
+            cutScene.GetComponent<CutUiScript>().Activate();
+            GameEnd();
         }
     }
 }

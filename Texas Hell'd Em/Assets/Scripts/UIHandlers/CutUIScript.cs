@@ -11,9 +11,9 @@ summary: this is the script that is used swap out the ui for the cutscene when c
 */
 public class CutUiScript : MonoBehaviour
 {
-    GameController gameController;
-    CardController cardController;
-    PlayerController playerController;
+    [SerializeField] GameController gameController;
+    [SerializeField] CardController cardController;
+    [SerializeField] PlayerController playerController;
 
     //player cards
     [SerializeField] private GameObject playerCard1;
@@ -63,25 +63,15 @@ public class CutUiScript : MonoBehaviour
     private Sprite bot3Card2Sprite;
 
     //player indicator sprites
-    private Sprite PlayerIndicatorCard;
-    private Sprite PlayerIndicatorSuit;
     private Sprite PlayerIndicatorHand;
-
     //npc indicator sprites
-    private Sprite NPC1IndicatorCard;
-    private Sprite NPC1IndicatorSuit;
     private Sprite NPC1IndicatorHand;
-
-    private Sprite NPC2IndicatorCard;
-    private Sprite NPC2IndicatorSuit;
     private Sprite NPC2IndicatorHand;
-
-    private Sprite NPC3IndicatorCard;
-    private Sprite NPC3IndicatorSuit;
     private Sprite NPC3IndicatorHand;
 
     //counter
     int counter;
+    bool isActive = false;
 
     //ui
     [SerializeField] private GameObject retryBtn;
@@ -98,7 +88,11 @@ public class CutUiScript : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         playerController = FindObjectOfType<PlayerController>();
         cardController = FindObjectOfType<CardController>();
+    }
 
+    public void Activate()
+    {
+        isActive = true;
         //get cards from game
         SetSprites();
         //check win
@@ -158,32 +152,35 @@ public class CutUiScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        counter++;
+        if (isActive)
+        {
+            counter++;
 
-        if(counter > 40)
-        {
-            NPC1Indicator.SetActive(true);
-            bot1Card1.GetComponent<SpriteRenderer>().sprite = bot1Card1Sprite;
-            bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
-        }
-        else if (counter > 80)
-        {
-            NPC2Indicator.SetActive(true);
-            bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card1Sprite;
-            bot2Card2.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
-        }
-        else if (counter > 120)
-        {
-            NPC3Indicator.SetActive(true);
-            bot3Card1.GetComponent<SpriteRenderer>().sprite = bot3Card1Sprite;
-            bot3Card2.GetComponent<SpriteRenderer>().sprite = bot3Card2Sprite;
-        }
-        else if (counter > 150)
-        {
-            WinLoseText.gameObject.SetActive(true);
-            retryBtn.SetActive(true);
-            menuBtn.SetActive(true);
-            quitBtn.SetActive(true);
+            if (counter > 50)
+            {
+                NPC1Indicator.SetActive(true);
+                bot1Card1.GetComponent<SpriteRenderer>().sprite = bot1Card1Sprite;
+                bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+            }
+            else if (counter > 100)
+            {
+                NPC2Indicator.SetActive(true);
+                bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card1Sprite;
+                bot2Card2.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+            }
+            else if (counter > 150)
+            {
+                NPC3Indicator.SetActive(true);
+                bot3Card1.GetComponent<SpriteRenderer>().sprite = bot3Card1Sprite;
+                bot3Card2.GetComponent<SpriteRenderer>().sprite = bot3Card2Sprite;
+            }
+            else if (counter > 250)
+            {
+                WinLoseText.gameObject.SetActive(true);
+                retryBtn.SetActive(true);
+                menuBtn.SetActive(true);
+                quitBtn.SetActive(true);
+            }
         }
     }
 }

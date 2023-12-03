@@ -58,3 +58,9 @@ TagManager:
   - name: cards
     uniqueID: 708809185
     locked: 0
+  - name: CutsceneBackground
+    uniqueID: 2888185895
+    locked: 0
+  - name: CutsceneCards
+    uniqueID: 41907325
+    locked: 0
