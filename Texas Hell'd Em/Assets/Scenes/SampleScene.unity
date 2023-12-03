@@ -201,7 +201,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &35868172
 MonoBehaviour:
@@ -1348,7 +1348,7 @@ RectTransform:
   m_Children:
   - {fileID: 2117019577}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1385,7 +1385,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &363450743
 MonoBehaviour:
@@ -2034,57 +2034,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &600903151
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 600903153}
-  - component: {fileID: 600903152}
-  m_Layer: 0
-  m_Name: UIController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &600903152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600903151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee8e77611a0977e49a8b85db56def522, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerCard1: {fileID: 766296937}
-  playerCard2: {fileID: 1854843859}
-  riverCard1: {fileID: 1935832507}
-  riverCard2: {fileID: 1010268276}
-  riverCard3: {fileID: 1409477759}
-  riverCard4: {fileID: 1496881461}
-  riverCard5: {fileID: 761026777}
---- !u!4 &600903153
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600903151}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 136.22519, y: 44.7856, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &605085038
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2343,7 @@ Transform:
   - {fileID: 61279649}
   - {fileID: 873479010}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &761026777
 GameObject:
@@ -2828,7 +2777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 970191098}
-  - component: {fileID: 970191097}
+  - component: {fileID: 970191099}
   m_Layer: 0
   m_Name: CutScene
   m_TagString: Untagged
@@ -2836,7 +2785,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &970191097
+--- !u!4 &970191098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970191096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6426824, y: 0.084554814, z: -4.8691554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1202894139}
+  - {fileID: 1562373021}
+  - {fileID: 1277802908}
+  - {fileID: 1498889226}
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &970191099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2858,41 +2826,21 @@ MonoBehaviour:
   riverCard3: {fileID: 778755097}
   riverCard4: {fileID: 1444279261}
   riverCard5: {fileID: 1306389642}
-  bot1Card1: {fileID: 61239402}
-  bot1Card2: {fileID: 1746014900}
-  bot2Card1: {fileID: 1262099769}
-  bot2Card2: {fileID: 683462957}
-  bot3Card1: {fileID: 702042348}
-  bot3Card2: {fileID: 580920695}
-  PlayerIndicator: {fileID: 2194013}
-  NPC1Indicator: {fileID: 1125332970}
-  NPC2Indicator: {fileID: 905249261}
-  NPC3Indicator: {fileID: 845292105}
+  NPC1Card1: {fileID: 61239402}
+  NPC1Card2: {fileID: 1746014900}
+  NPC2Card1: {fileID: 1262099769}
+  NPC2Card2: {fileID: 683462957}
+  NPC3Card1: {fileID: 702042348}
+  NPC3Card2: {fileID: 580920695}
+  PlayerIndicator: {fileID: 1035878229}
+  NPC1Indicator: {fileID: 122626958}
+  NPC2Indicator: {fileID: 1865135201}
+  NPC3Indicator: {fileID: 1093895392}
   retryBtn: {fileID: 1580980556}
   menuBtn: {fileID: 79973838}
-  quitBtn: {fileID: 0}
   score: {fileID: 322824692}
   WinLoseText: {fileID: 434665916}
   win: 0
---- !u!4 &970191098
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 970191096}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6426824, y: 0.084554814, z: -4.8691554}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1202894139}
-  - {fileID: 1562373021}
-  - {fileID: 1277802908}
-  - {fileID: 1498889226}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987427774
 GameObject:
   m_ObjectHideFlags: 0
@@ -4358,7 +4306,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1480997901
 GameObject:
@@ -5492,7 +5440,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090637606
 GameObject:

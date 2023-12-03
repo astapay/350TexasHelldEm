@@ -26,14 +26,14 @@ public class CutUiScript : MonoBehaviour
     [SerializeField] private GameObject riverCard5;
 
     //npc1 cards
-    [SerializeField] private GameObject bot1Card1;
-    [SerializeField] private GameObject bot1Card2;
+    [SerializeField] private GameObject NPC1Card1;
+    [SerializeField] private GameObject NPC1Card2;
     //npc2 cards
-    [SerializeField] private GameObject bot2Card1;
-    [SerializeField] private GameObject bot2Card2;
+    [SerializeField] private GameObject NPC2Card1;
+    [SerializeField] private GameObject NPC2Card2;
     //npc3 cards
-    [SerializeField] private GameObject bot3Card1;
-    [SerializeField] private GameObject bot3Card2;
+    [SerializeField] private GameObject NPC3Card1;
+    [SerializeField] private GameObject NPC3Card2;
 
     //player indicator
     [SerializeField] private GameObject PlayerIndicator;
@@ -53,14 +53,14 @@ public class CutUiScript : MonoBehaviour
     private Sprite riverCard5Sprite;
 
     //npc1 card sprites
-    private Sprite bot1Card1Sprite;
-    private Sprite bot1Card2Sprite;
+    private Sprite NPC1Card1Sprite;
+    private Sprite NPC1Card2Sprite;
     //npc2 card sprites
-    private Sprite bot2Card1Sprite;
-    private Sprite bot2Card2Sprite;
+    private Sprite NPC2Card1Sprite;
+    private Sprite NPC2Card2Sprite;
     //npc3 card sprites
-    private Sprite bot3Card1Sprite;
-    private Sprite bot3Card2Sprite;
+    private Sprite NPC3Card1Sprite;
+    private Sprite NPC3Card2Sprite;
 
     //player indicator sprites
     private Sprite PlayerIndicatorHand;
@@ -76,7 +76,6 @@ public class CutUiScript : MonoBehaviour
     //ui
     [SerializeField] private GameObject retryBtn;
     [SerializeField] private GameObject menuBtn;
-    [SerializeField] private GameObject quitBtn;
 
     [SerializeField] private TMP_Text score;
     [SerializeField] private TMP_Text WinLoseText;
@@ -119,7 +118,6 @@ public class CutUiScript : MonoBehaviour
 
         retryBtn.SetActive(false);
         menuBtn.SetActive(false);
-        quitBtn.SetActive(false);
         WinLoseText.gameObject.SetActive(false);
 
         counter = 0;
@@ -139,12 +137,12 @@ public class CutUiScript : MonoBehaviour
         riverCard3Sprite = cardController.getCardSprite(gameController.getRiver()[2]);
         riverCard4Sprite = cardController.getCardSprite(gameController.getRiver()[3]);
         riverCard5Sprite = cardController.getCardSprite(gameController.getRiver()[4]);
-        bot1Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[0][0]);
-        bot1Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[0][1]);
-        bot2Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[1][0]);
-        bot2Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[1][1]);
-        bot3Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[2][0]);
-        bot3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
+        NPC1Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[0][0]);
+        NPC1Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[0][1]);
+        NPC2Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[1][0]);
+        NPC2Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[1][1]);
+        NPC3Card1Sprite = cardController.getCardSprite(gameController.getAIHands()[2][0]);
+        NPC3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
     }
 
     /// <summary>
@@ -174,27 +172,26 @@ public class CutUiScript : MonoBehaviour
             if (counter > 50)
             {
                 NPC1Indicator.SetActive(true);
-                bot1Card1.GetComponent<SpriteRenderer>().sprite = bot1Card1Sprite;
-                bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+                NPC1Card1.GetComponent<SpriteRenderer>().sprite = NPC1Card1Sprite;
+                NPC2Card1.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
             }
             else if (counter > 100)
             {
                 NPC2Indicator.SetActive(true);
-                bot2Card1.GetComponent<SpriteRenderer>().sprite = bot2Card1Sprite;
-                bot2Card2.GetComponent<SpriteRenderer>().sprite = bot2Card2Sprite;
+                NPC2Card1.GetComponent<SpriteRenderer>().sprite = NPC2Card1Sprite;
+                NPC2Card2.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
             }
             else if (counter > 150)
             {
                 NPC3Indicator.SetActive(true);
-                bot3Card1.GetComponent<SpriteRenderer>().sprite = bot3Card1Sprite;
-                bot3Card2.GetComponent<SpriteRenderer>().sprite = bot3Card2Sprite;
+                NPC3Card1.GetComponent<SpriteRenderer>().sprite = NPC3Card1Sprite;
+                NPC3Card2.GetComponent<SpriteRenderer>().sprite = NPC3Card2Sprite;
             }
             else if (counter > 250)
             {
                 WinLoseText.gameObject.SetActive(true);
                 retryBtn.SetActive(true);
                 menuBtn.SetActive(true);
-                quitBtn.SetActive(true);
             }
         }
     }
