@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public CardController CardController;
     public ChipController ChipController;
     public PlayerController PlayerController;
+    public HandResolver HandResolver;
     public TMP_Text scoreText;
     public TMP_Text chipCounterText; // Add a Text component to display the chip counter
     public GameObject[] handUI;
@@ -25,6 +26,8 @@ public class GameController : MonoBehaviour
     private CardData[] handAI1;
     private CardData[] handAI2;
     private CardData[] handAI3;
+    private CardData[] handPlayer;
+    public CardData[][] allHands;
     public int score;
     public int chipCounter = 0; // New variable to keep track of collected chips
     private bool game = true;
@@ -45,8 +48,9 @@ public class GameController : MonoBehaviour
     public float timer;
 
     [SerializeField] private TMP_Text timerText;
-
     [SerializeField] private GameObject cutScene;
+
+    public Tuple<int, int> winnerDetails;
 
     /// <summary>
     /// called on start, used to set vaiables and start ruitines
@@ -285,7 +289,30 @@ public class GameController : MonoBehaviour
         quitBtn.gameObject.SetActive(false);
         scoreText.gameObject.SetActive(false);
         chipCounterText.gameObject.SetActive(false);
-}
+        Resolve();
+    }
+    
+    /// <summary>
+    /// adds the river to all of the hands inorder and uses hand resolver
+    /// </summary>
+    private void Resolve()
+    {
+        handPlayer = PlayerController.getHand();
+        for(int i = 0; i < 5; i++)
+        {
+            handPlayer[i + 2] = river[i];
+            handAI1[i + 2] = river[i];
+            handAI2[i + 2] = river[i];
+            handAI3[i + 2] = river[i];
+        }
+
+        allHands[0] = handPlayer;
+        allHands[1] = handAI1;
+        allHands[2] = handAI2;
+        allHands[3] = handAI3;
+
+        winnerDetails = HandResolver.ResolveHands(allHands);
+    }
 
 
     /// <summary>
