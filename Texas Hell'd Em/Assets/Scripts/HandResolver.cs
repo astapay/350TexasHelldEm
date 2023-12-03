@@ -86,10 +86,9 @@ public class HandResolver
 
                 // If any card in this hand is different, we haven't found
                 // the correct hand
-                for(int j = 0;i < hands[i].Length;j++)
+                for(int j = 0; j < hands[i].Length; j++)
                 {
-                    if (hands[i][j].getRank() != 
-                        tiedHands[handInTied][j].getRank())
+                    if (hands[i][j].getRank() != tiedHands[handInTied][j].getRank())
                     {
                         found = false;
                         break;

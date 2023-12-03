@@ -18,16 +18,16 @@ public class GameController : MonoBehaviour
     public CardController CardController;
     public ChipController ChipController;
     public PlayerController PlayerController;
-    public HandResolver HandResolver;
+    public HandResolver HandResolver = new HandResolver();
     public TMP_Text scoreText;
     public TMP_Text chipCounterText; // Add a Text component to display the chip counter
     public GameObject[] handUI;
     public GameObject[] riverUI;
-    private CardData[] handAI1;
-    private CardData[] handAI2;
-    private CardData[] handAI3;
+    private CardData[] handAI1 = new CardData[7];
+    private CardData[] handAI2 = new CardData[7];
+    private CardData[] handAI3 = new CardData[7];
     private CardData[] handPlayer;
-    public CardData[][] allHands;
+    public CardData[][] allHands = new CardData[4][];
     public int score;
     public int chipCounter = 0; // New variable to keep track of collected chips
     private bool game = true;

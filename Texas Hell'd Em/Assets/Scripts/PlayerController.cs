@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private InputAction pauseToggle;
     private InputAction quit;
     CardData nullCard = new CardData(-1, -1);
-    CardData[] hand = { new CardData(-1, -1), new CardData(-1, -1)};
+
+    CardData[] hand = new CardData[7];
     int selectedCard;
     int handLevel;
 
@@ -36,6 +37,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void Start()
     {
+        for(int i = 0; i < hand.Length; i++)
+        {
+            hand[i] = nullCard;
+        }
         playerInput = GetComponent<PlayerInput>();
         chooseLeft = playerInput.currentActionMap.FindAction("SelectCardZero");
         chooseRight = playerInput.currentActionMap.FindAction("SelectCardOne");
