@@ -25,7 +25,10 @@ public class BulletHellTutorialScrip : MonoBehaviour
 
     //int for keeping track of what page we are on
     private int page;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// Start is called before the first frame update
+    /// </summary>
     private void Start()
     {
         page = 1;
@@ -34,7 +37,10 @@ public class BulletHellTutorialScrip : MonoBehaviour
         next.SetActive(true);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
+    /// <param name="currPage"></param>
 
     private void UpdateText(int currPage)
     {
@@ -65,18 +71,27 @@ public class BulletHellTutorialScrip : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// what happens when next button is hit
+    /// </summary>
     public void NextButton()
     {
         page++;
         UpdateText(page);
     }
 
+    /// <summary>
+    /// what happens when previous button is hit
+    /// </summary>
     public void previousButton()
     {
         page--;
         UpdateText(page);
     }
 
+    /// <summary>
+    /// what happens when back button is hit
+    /// </summary>
     public void backButton()
     {
         SceneManager.LoadScene("TutorialMenu");

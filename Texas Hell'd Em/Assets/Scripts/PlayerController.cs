@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject LeftCardIndicator;
     private GameController gameController;
 
-    // <summary>
-    // Currently used for debugging to print our current poker hand
-    // </summary>
+    /// <summary>
+    /// Currently used for debugging to print our current poker hand
+    /// </summary>
     public void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -51,12 +51,20 @@ public class PlayerController : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
     }
 
+    /// <summary>
+    /// if quit has started
+    /// </summary>
+    /// <param name="obj"></param>
     private void QuitStarted(InputAction.CallbackContext obj)
     {
         Application.Quit();
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
+    /// <summary>
+    /// if pause has started
+    /// </summary>
+    /// <param name="obj"></param>
     private void PauseToggleStarted(InputAction.CallbackContext obj)
     {
         bool isPaused = gameController.IsPaused();
@@ -69,6 +77,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// selects the right indicator
+    /// </summary>
+    /// <param name="context"></param>
     private void chooseRightPerformed(InputAction.CallbackContext context)
     {
         selectedCard = 1;
@@ -77,6 +89,10 @@ public class PlayerController : MonoBehaviour
         LeftCardIndicator.SetActive(false);
     }
 
+    /// <summary>
+    /// selects the left indicator
+    /// </summary>
+    /// <param name="context"></param>
     private void chooseLeftPerformed(InputAction.CallbackContext context)
     {
         selectedCard = 0;
@@ -140,6 +156,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// called on destroy to clean
+    /// </summary>
     private void OnDestroy()
     {
         chooseLeft.performed -= chooseLeftPerformed;

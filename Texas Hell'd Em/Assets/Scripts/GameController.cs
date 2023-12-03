@@ -1,3 +1,9 @@
+/******************************************************************************
+// File Name:       GameController.cs
+// Author:          Alex Kalscheur
+// Creation date:   10/21/2023
+// Summary:         Controls the majority of the game and the ui
+******************************************************************************/
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,12 +48,15 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject cutScene;
 
+    /// <summary>
+    /// called on start, used to set vaiables and start ruitines
+    /// </summary>
     private void Start()
     {
         cutScene.SetActive(false);
         timer = 20f;
         score = 0;
-        updateScoreText(chipValue);
+        updateScoreText();
         updateChipCounterText(); // Initialize the chip counter text
         deck = ShuffleDeck();
         for (int i = 0; i < 5; i++)
@@ -62,6 +71,9 @@ public class GameController : MonoBehaviour
         quitBtn.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// called every fram, used to get hand and set timer
+    /// </summary>
     private void Update()
     {
         for (int i = 0; i < 2; i++)
@@ -74,22 +86,36 @@ public class GameController : MonoBehaviour
         timerText.SetText(timer.ToString("0.00"));
     }
 
-    public void updateScoreText(int chipValue)
+    /// <summary>
+    /// updates score text
+    /// </summary>
+    public void updateScoreText()
     {
         scoreText.text = score.ToString();
     }
 
+    /// <summary>
+    /// used to update the chip counter text
+    /// </summary>
     public void updateChipCounterText()
     {
         chipCounterText.text =  chipCounter.ToString();
     }
 
+    /// <summary>
+    /// used to update the chip counter variable, to update the text
+    /// </summary>
+    /// <param name="chipValue"></param> value added to chipcounter
     public void UpdateChipCounter(int chipValue)
     {
         chipCounter += chipValue;
         updateChipCounterText(); // Update the chip counter text when it changes
     }
 
+    /// <summary>
+    /// creates a card
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CreateACard()
     {
         int spawns = 0;
@@ -116,6 +142,10 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// creates a chip
+    /// </summary>
+    /// <returns></returns> 
     IEnumerator spawnChips() {
         while (game)
         {
@@ -169,6 +199,9 @@ public class GameController : MonoBehaviour
         return deck;
     }
 
+    /// <summary>
+    /// used to flip the river on time
+    /// </summary>
     void RiverFlipper()
     {
         switch (riverFlipperStage)
@@ -193,7 +226,9 @@ public class GameController : MonoBehaviour
         riverFlipperStage++;
     }
 
-
+    /// <summary>
+    /// toggles the pause bool and changes based on bool
+    /// </summary>
     public void TogglePaused()
     {
         if(paused == false)
@@ -212,21 +247,36 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// returns if the game is paused or not
+    /// </summary>
+    /// <returns></returns>
     public bool IsPaused()
     {
         return paused;
     }
 
+    /// <summary>
+    /// returns the hands of the ai
+    /// </summary>
+    /// <returns></returns> hand of ai
     public CardData[][] getAIHands()
     {
         return new CardData[][] { handAI1, handAI2, handAI3 };
     }
 
+    /// <summary>
+    /// returns the river
+    /// </summary>
+    /// <returns></returns> returns the river cards
     public CardData[] getRiver()
     {
         return river;
     }
 
+    /// <summary>
+    /// called on game end, updates ui
+    /// </summary>
     private void GameEnd()
     {
         paused = true;
@@ -237,24 +287,27 @@ public class GameController : MonoBehaviour
         chipCounterText.gameObject.SetActive(false);
 }
 
+
+    /// <summary>
+    /// called 50 times a second, used to update counter, flip river, and end game
+    /// </summary>
     private void FixedUpdate()
     {
         if(!paused)
         {
             timer = timer - .02f;
         }
-
+        
         if (timer <= 20 - (riverFlipperStage * 5))
         {
             RiverFlipper();
         }
-
-        if(timer <= 0)
+        else if(timer <= 0)
         {
+            GameEnd();
             cutScene.SetActive(true);
             game = false;
             cutScene.GetComponent<CutUiScript>().Activate();
-            GameEnd();
         }
     }
 }

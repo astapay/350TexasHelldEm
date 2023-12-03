@@ -83,6 +83,9 @@ public class CutUiScript : MonoBehaviour
 
     public bool win;
 
+    /// <summary>
+    /// called on start
+    /// </summary>
     private void Start()
     {
         gameController = FindObjectOfType<GameController>();
@@ -90,6 +93,9 @@ public class CutUiScript : MonoBehaviour
         cardController = FindObjectOfType<CardController>();
     }
 
+    /// <summary>
+    /// called on game end and cutscene begin
+    /// </summary>
     public void Activate()
     {
         isActive = true;
@@ -121,6 +127,9 @@ public class CutUiScript : MonoBehaviour
         score.SetText(gameController.chipCounter.ToString());
     }
 
+    /// <summary>
+    /// sets the sprites to the sprites of the cards that the player,river, and ai have
+    /// </summary>
     private void SetSprites()
     {
         playerCard1Sprite = cardController.getCardSprite(playerController.getHand()[0]);
@@ -138,6 +147,9 @@ public class CutUiScript : MonoBehaviour
         bot3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
     }
 
+    /// <summary>
+    /// sets win text
+    /// </summary>
     private void CheckWin()
     {
         if (win)
@@ -150,6 +162,9 @@ public class CutUiScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// called 50 times a second
+    /// </summary>
     private void FixedUpdate()
     {
         if (isActive)

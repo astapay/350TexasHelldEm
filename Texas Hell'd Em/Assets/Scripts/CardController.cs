@@ -120,6 +120,10 @@ public class CardController : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
     }
 
+    /// <summary>
+    /// gets all card sprites
+    /// </summary>
+    /// <returns></returns> all card sprites
     public Sprite[] getCardSprites() {
         return cardSprites;
     }
@@ -137,6 +141,12 @@ public class CardController : MonoBehaviour
         cardObject.GetComponent<Rigidbody2D>().velocity = new Vector2(cardPos.x / -5, cardPos.y / -5);                  //moves card toward player
     }
 
+
+    /// <summary>
+    /// returns card sprite
+    /// </summary>
+    /// <param name="card"></param> card to grab sprite of
+    /// <returns></returns> card sprite
     public Sprite getCardSprite(CardData card)
     {
         return cardSprites[card.getSuit() * 13 + card.getRank()];
