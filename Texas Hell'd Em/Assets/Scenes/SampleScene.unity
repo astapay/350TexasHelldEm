@@ -1744,7 +1744,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2e72a2bc297fcb449a1b5757a1ec4ecd, type: 3}
   - {fileID: 21300000, guid: c910a93a98fc2f1418d96c14a34fea55, type: 3}
   - {fileID: 21300000, guid: d4bc95d2b3def3d43942d0a36496e0f9, type: 3}
-  - {fileID: 21300000, guid: 9e4bccd9470d5f140a1eab5955ad4928, type: 3}
+  - {fileID: 21300000, guid: c4ef77a6ec569a84689511138ff2b059, type: 3}
   - {fileID: 21300000, guid: 8ee121f4591210c4a96e502096658b21, type: 3}
   - {fileID: 21300000, guid: 577def95b8221aa4da1e4917e25202c2, type: 3}
   - {fileID: 21300000, guid: 126d86047b202c8419b78eae3d2f84e7, type: 3}
@@ -2840,7 +2840,15 @@ MonoBehaviour:
   menuBtn: {fileID: 79973838}
   score: {fileID: 322824692}
   WinLoseText: {fileID: 434665916}
-  win: 0
+  straightFlush: {fileID: 21300000, guid: 317007c6388626145836500b96e37fde, type: 3}
+  fourOfAKind: {fileID: 21300000, guid: 93ba4d4b14595cc4a984c36ebcd05cfa, type: 3}
+  fullHouse: {fileID: 21300000, guid: 5d916a1c88b4dd442aa753e0ef16f6ce, type: 3}
+  flush: {fileID: 21300000, guid: f9fc3d280d997db45bee33c90964ab0d, type: 3}
+  straight: {fileID: 21300000, guid: 7f27016e7c1c49b4c8ea45639ebd5463, type: 3}
+  threeOfAKind: {fileID: 21300000, guid: ba125baf8fd171648aaf1dd9d5a43655, type: 3}
+  twoPair: {fileID: 21300000, guid: 63e6f04e3834c1b44a482e6a71254ef3, type: 3}
+  pair: {fileID: 21300000, guid: 894ea5b9687d6b746b055be49f7ef336, type: 3}
+  highCard: {fileID: 21300000, guid: 9406d97bc74f9ec4ebaca070951a9c6d, type: 3}
 --- !u!1 &987427774
 GameObject:
   m_ObjectHideFlags: 0

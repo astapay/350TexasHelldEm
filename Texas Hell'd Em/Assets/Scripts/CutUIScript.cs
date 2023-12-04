@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 /*
 * ******************************************************************
@@ -62,13 +63,6 @@ public class CutUiScript : MonoBehaviour
     private Sprite NPC3Card1Sprite;
     private Sprite NPC3Card2Sprite;
 
-    //player indicator sprites
-    private Sprite PlayerIndicatorHand;
-    //npc indicator sprites
-    private Sprite NPC1IndicatorHand;
-    private Sprite NPC2IndicatorHand;
-    private Sprite NPC3IndicatorHand;
-
     //counter
     int counter;
     bool isActive = false;
@@ -80,7 +74,20 @@ public class CutUiScript : MonoBehaviour
     [SerializeField] private TMP_Text score;
     [SerializeField] private TMP_Text WinLoseText;
 
-    public bool win;
+    private int winner;
+    private int winnerHand;
+    private int endScore;
+
+    [SerializeField] private Sprite straightFlush;
+    [SerializeField] private Sprite fourOfAKind;
+    [SerializeField] private Sprite fullHouse;
+    [SerializeField] private Sprite flush;
+    [SerializeField] private Sprite straight;
+    [SerializeField] private Sprite threeOfAKind;
+    [SerializeField] private Sprite twoPair;
+    [SerializeField] private Sprite pair;
+    [SerializeField] private Sprite highCard;
+
 
     /// <summary>
     /// called on start
@@ -100,17 +107,22 @@ public class CutUiScript : MonoBehaviour
         isActive = true;
         //get cards from game
         SetSprites();
-        //check win
-        CheckWin();
         //set player cards
         playerCard1.GetComponent<SpriteRenderer>().sprite = playerCard1Sprite;
+        playerCard1.transform.localScale = new Vector2(.5f, .5f);
         playerCard2.GetComponent<SpriteRenderer>().sprite = playerCard2Sprite;
+        playerCard2.transform.localScale = new Vector2(.5f, .5f);
         //set river cards
         riverCard1.GetComponent<SpriteRenderer>().sprite = riverCard1Sprite;
+        riverCard1.transform.localScale = new Vector2(.5f, .5f);
         riverCard2.GetComponent<SpriteRenderer>().sprite = riverCard2Sprite;
+        riverCard2.transform.localScale = new Vector2(.5f, .5f);
         riverCard3.GetComponent<SpriteRenderer>().sprite = riverCard3Sprite;
+        riverCard3.transform.localScale = new Vector2(.5f, .5f);
         riverCard4.GetComponent<SpriteRenderer>().sprite = riverCard4Sprite;
+        riverCard4.transform.localScale = new Vector2(.5f, .5f);
         riverCard5.GetComponent<SpriteRenderer>().sprite = riverCard5Sprite;
+        riverCard5.transform.localScale = new Vector2(.5f, .5f);
 
         NPC1Indicator.SetActive(false);
         NPC2Indicator.SetActive(false);
@@ -120,9 +132,15 @@ public class CutUiScript : MonoBehaviour
         menuBtn.SetActive(false);
         WinLoseText.gameObject.SetActive(false);
 
-        counter = 0;
+        //check win
+        CheckWin();
+        //sets indicator of winner
+        if (winner != 0)
+        {
+            SetAIIndicator();
+        }
 
-        score.SetText(gameController.chipCounter.ToString());
+        counter = 0;
     }
 
     /// <summary>
@@ -145,18 +163,91 @@ public class CutUiScript : MonoBehaviour
         NPC3Card2Sprite = cardController.getCardSprite(gameController.getAIHands()[2][1]);
     }
 
-    /// <summary>
-    /// sets win text
-    /// </summary>
-    private void CheckWin()
+    private void SetAIIndicator()
     {
-        if (win)
+        if(winner == 1)
         {
-            WinLoseText.SetText("You Win!!");
+            NPC1Indicator.GetComponent<SpriteRenderer>().sprite = GetIndicatorSprite(winnerHand);
+        }
+        else if (winner == 2)
+        {
+            NPC2Indicator.GetComponent<SpriteRenderer>().sprite = GetIndicatorSprite(winnerHand);
         }
         else
         {
-            WinLoseText.SetText("You Lost!!");
+            NPC3Indicator.GetComponent<SpriteRenderer>().sprite = GetIndicatorSprite(winnerHand);
+        }
+    }
+    /// <summary>
+    /// sets win text and checks if win
+    /// </summary>
+    private void CheckWin()
+    {
+        endScore = gameController.chipCounter;
+
+        winner = gameController.winnerDetails.Item1;
+        winnerHand = gameController.winnerDetails.Item2;
+
+        if(winner == 0)
+        {
+            WinLoseText.SetText("You have won!");
+            PlayerIndicator.GetComponent<SpriteRenderer>().sprite = GetIndicatorSprite(winnerHand);
+            endScore = endScore * winnerHand;
+        }
+        else
+        {
+            WinLoseText.SetText("You have lost!");
+            endScore = 0;
+        }
+        score.SetText(endScore.ToString());
+    }
+
+    /// <summary>
+    /// takes an int for the hand and returns the sprite that matches the int
+    /// </summary>
+    /// <param name="Hand"></param> int
+    /// <returns></returns> sprite
+    private Sprite GetIndicatorSprite(int Hand)
+    {
+        if (Hand == 0)
+        {
+            return highCard;
+        }
+        else if (Hand == 1)
+        {
+            return pair;
+        }
+        else if (Hand == 2)
+        {
+            return twoPair;
+        }
+        else if (Hand == 3)
+        {
+            return threeOfAKind;
+        }
+        else if (Hand == 4)
+        {
+            return straight;
+        }
+        else if (Hand == 5)
+        {
+            return flush;
+        }
+        else if (Hand == 6)
+        {
+            return fullHouse;
+        }
+        else if (Hand == 7)
+        {
+            return fourOfAKind;
+        }
+        else if (Hand == 8)
+        {
+            return straightFlush;
+        }
+        else 
+        {
+            return highCard;
         }
     }
 
@@ -171,21 +262,36 @@ public class CutUiScript : MonoBehaviour
 
             if (counter > 50)
             {
-                NPC1Indicator.SetActive(true);
+                if(winner == 1)
+                {
+                    NPC1Indicator.SetActive(true);
+                }
                 NPC1Card1.GetComponent<SpriteRenderer>().sprite = NPC1Card1Sprite;
-                NPC2Card1.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
+                NPC1Card1.transform.localScale = new Vector2(.25f, .25f);
+                NPC1Card2.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
+                NPC1Card2.transform.localScale = new Vector2(.25f, .25f);
             }
             else if (counter > 100)
             {
-                NPC2Indicator.SetActive(true);
+                if (winner == 2)
+                {
+                    NPC2Indicator.SetActive(true);
+                }
                 NPC2Card1.GetComponent<SpriteRenderer>().sprite = NPC2Card1Sprite;
+                NPC2Card1.transform.localScale = new Vector2(.25f, .25f);
                 NPC2Card2.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
+                NPC2Card2.transform.localScale = new Vector2(.25f, .25f);
             }
             else if (counter > 150)
             {
-                NPC3Indicator.SetActive(true);
+                if (winner == 3)
+                {
+                    NPC3Indicator.SetActive(true);
+                }
                 NPC3Card1.GetComponent<SpriteRenderer>().sprite = NPC3Card1Sprite;
+                NPC3Card1.transform.localScale = new Vector2(.25f, .25f);
                 NPC3Card2.GetComponent<SpriteRenderer>().sprite = NPC3Card2Sprite;
+                NPC3Card2.transform.localScale = new Vector2(.25f, .5f);
             }
             else if (counter > 250)
             {
