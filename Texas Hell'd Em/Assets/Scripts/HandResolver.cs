@@ -29,14 +29,14 @@ public class HandResolver
         // So that we don't mess up what appears on screen
         CardData[][] handsCopy = new CardData[hands.Length][];
 
-        for(int i = 0;i < hands.Length;i++)
+        for(int i = 0;i < hands.GetLength(0);i++)
         {
             handsCopy[i] = new CardData[hands[i].Length];
         }
 
-        for(int i = 0;i < hands.Length;i++)
+        for(int i = 0;i < hands.GetLength(0);i++)
         {
-            for(int j = 0;j < hands[i].Length;i++)
+            for(int j = 0;j < hands[i].Length;j++)
             {
                 handsCopy[i][j] = hands[i][j];
             }
