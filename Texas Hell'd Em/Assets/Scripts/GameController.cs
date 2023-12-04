@@ -52,6 +52,8 @@ public class GameController : MonoBehaviour
 
     public Tuple<int, int> winnerDetails;
 
+    private bool endStarted;
+
     /// <summary>
     /// called on start, used to set vaiables and start ruitines
     /// </summary>
@@ -73,6 +75,8 @@ public class GameController : MonoBehaviour
         continueBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
         quitBtn.gameObject.SetActive(false);
+
+        endStarted = false;
     }
 
     /// <summary>
@@ -331,10 +335,14 @@ public class GameController : MonoBehaviour
         }
         else if(timer <= 0)
         {
-            GameEnd();
-            cutScene.SetActive(true);
-            game = false;
-            cutScene.GetComponent<CutUiScript>().Activate();
+            if (!endStarted)
+            {
+                endStarted = true;
+                GameEnd();
+                cutScene.SetActive(true);
+                game = false;
+                cutScene.GetComponent<CutUiScript>().Activate();
+            }
         }
     }
 }

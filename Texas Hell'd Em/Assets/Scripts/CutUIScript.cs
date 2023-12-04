@@ -109,20 +109,13 @@ public class CutUiScript : MonoBehaviour
         SetSprites();
         //set player cards
         playerCard1.GetComponent<SpriteRenderer>().sprite = playerCard1Sprite;
-        playerCard1.transform.localScale = new Vector2(.5f, .5f);
         playerCard2.GetComponent<SpriteRenderer>().sprite = playerCard2Sprite;
-        playerCard2.transform.localScale = new Vector2(.5f, .5f);
         //set river cards
         riverCard1.GetComponent<SpriteRenderer>().sprite = riverCard1Sprite;
-        riverCard1.transform.localScale = new Vector2(.5f, .5f);
         riverCard2.GetComponent<SpriteRenderer>().sprite = riverCard2Sprite;
-        riverCard2.transform.localScale = new Vector2(.5f, .5f);
         riverCard3.GetComponent<SpriteRenderer>().sprite = riverCard3Sprite;
-        riverCard3.transform.localScale = new Vector2(.5f, .5f);
         riverCard4.GetComponent<SpriteRenderer>().sprite = riverCard4Sprite;
-        riverCard4.transform.localScale = new Vector2(.5f, .5f);
         riverCard5.GetComponent<SpriteRenderer>().sprite = riverCard5Sprite;
-        riverCard5.transform.localScale = new Vector2(.5f, .5f);
 
         NPC1Indicator.SetActive(false);
         NPC2Indicator.SetActive(false);
@@ -259,41 +252,36 @@ public class CutUiScript : MonoBehaviour
         if (isActive)
         {
             counter++;
+            Debug.Log(counter);
 
-            if (counter > 50)
+            if (counter == 50)
             {
                 if(winner == 1)
                 {
                     NPC1Indicator.SetActive(true);
                 }
                 NPC1Card1.GetComponent<SpriteRenderer>().sprite = NPC1Card1Sprite;
-                NPC1Card1.transform.localScale = new Vector2(.25f, .25f);
-                NPC1Card2.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
-                NPC1Card2.transform.localScale = new Vector2(.25f, .25f);
+                NPC1Card2.GetComponent<SpriteRenderer>().sprite = NPC1Card2Sprite;
             }
-            else if (counter > 100)
+            else if (counter == 100)
             {
                 if (winner == 2)
                 {
                     NPC2Indicator.SetActive(true);
                 }
                 NPC2Card1.GetComponent<SpriteRenderer>().sprite = NPC2Card1Sprite;
-                NPC2Card1.transform.localScale = new Vector2(.25f, .25f);
                 NPC2Card2.GetComponent<SpriteRenderer>().sprite = NPC2Card2Sprite;
-                NPC2Card2.transform.localScale = new Vector2(.25f, .25f);
             }
-            else if (counter > 150)
+            else if (counter == 150)
             {
                 if (winner == 3)
                 {
                     NPC3Indicator.SetActive(true);
                 }
                 NPC3Card1.GetComponent<SpriteRenderer>().sprite = NPC3Card1Sprite;
-                NPC3Card1.transform.localScale = new Vector2(.25f, .25f);
                 NPC3Card2.GetComponent<SpriteRenderer>().sprite = NPC3Card2Sprite;
-                NPC3Card2.transform.localScale = new Vector2(.25f, .5f);
             }
-            else if (counter > 250)
+            else if (counter == 250)
             {
                 WinLoseText.gameObject.SetActive(true);
                 retryBtn.SetActive(true);
