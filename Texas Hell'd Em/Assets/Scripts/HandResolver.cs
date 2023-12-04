@@ -31,6 +31,11 @@ public class HandResolver
 
         for(int i = 0;i < hands.Length;i++)
         {
+            handsCopy[i] = new CardData[hands[i].Length];
+        }
+
+        for(int i = 0;i < hands.Length;i++)
+        {
             for(int j = 0;j < hands[i].Length;i++)
             {
                 handsCopy[i][j] = hands[i][j];
