@@ -27,7 +27,15 @@ public class HandResolver
     {
         // We will create a copy of the hands to evaluate
         // So that we don't mess up what appears on screen
-        CardData[][] handsCopy = hands;
+        CardData[][] handsCopy = new CardData[hands.Length][];
+
+        for(int i = 0;i < hands.Length;i++)
+        {
+            for(int j = 0;j < hands[i].Length;i++)
+            {
+                handsCopy[i][j] = hands[i][j];
+            }
+        }
 
         // Sort each hand
         handsCopy = SortHands(handsCopy);
@@ -284,7 +292,7 @@ public class HandResolver
         int[] firstSuit = new int[4];
 
         // Initializing firstSuit
-        for (int i = 0; i < hand.Length;i++)
+        for (int i = 0; i < firstSuit.Length;i++)
         {
             firstSuit[i] = -1;
         }
