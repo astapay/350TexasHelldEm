@@ -18,28 +18,32 @@ public class HandResolver
     // <summary>
     // Determines the winner of multiple inputted hands
     // </summary>
-    // <param name="hand1"> The array of hands to evaluate </param>
+    // <param name="hands"> The array of hands to evaluate </param>
     // <returns> A tuple of types int and int.
     // The first value represents the player that won the poker game
     // The second value represents the type of hand that player won with
     // </returns>
     public Tuple<int,int> ResolveHands(CardData[][] hands)
     {
+        // We will create a copy of the hands to evaluate
+        // So that we don't mess up what appears on screen
+        CardData[][] handsCopy = hands;
+
         // Sort each hand
-        hands = SortHands(hands);
+        handsCopy = SortHands(handsCopy);
 
         // Find the values of each hand
-        int[] handResults = new int[hands.Length];
+        int[] handResults = new int[handsCopy.Length];
 
-        for(int i = 0;i < hands.Length;i++)
+        for(int i = 0;i < handsCopy.Length;i++)
         {
-            handResults[i] = FindHand(hands[i]);
+            handResults[i] = FindHand(handsCopy[i]);
         }
 
         // Find the strongest hand in the game
         int bestHandIndex = 0;
         
-        for(int i = 1;i < hands.Length;i++)
+        for(int i = 1;i < handsCopy.Length;i++)
         {
             if (handResults[i] > handResults[bestHandIndex])
             {
@@ -50,7 +54,7 @@ public class HandResolver
         // We also need to check for ties
         CardData[][] tiedHands = new CardData[0][];
 
-        for(int i = 0;i < hands.Length;i++)
+        for(int i = 0;i < handsCopy.Length;i++)
         {
             if (handResults[i] == handResults[bestHandIndex])
             {
@@ -61,7 +65,7 @@ public class HandResolver
                     temp[j] = tiedHands[j];
                 }
 
-                temp[tiedHands.Length] = hands[i];
+                temp[tiedHands.Length] = handsCopy[i];
 
                 tiedHands = temp;
             }
@@ -86,15 +90,15 @@ public class HandResolver
 
                 // If any card in this hand is different, we haven't found
                 // the correct hand
-                for(int j = 0; j < hands[i].Length; j++)
+                for(int j = 0; j < handsCopy[i].Length; j++)
                 {
-                    if (hands[i][j].getRank() != tiedHands[handInTied][j].getRank())
+                    if (handsCopy[i][j].getRank() != tiedHands[handInTied][j].getRank())
                     {
                         found = false;
                         break;
                     }
 
-                    if (hands[i][j].getSuit() !=
+                    if (handsCopy[i][j].getSuit() !=
                         tiedHands[handInTied][j].getSuit())
                     {
                         found = false;
