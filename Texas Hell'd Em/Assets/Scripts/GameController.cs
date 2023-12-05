@@ -80,17 +80,17 @@ public class GameController : MonoBehaviour
     }
 
     /// <summary>
-    /// called every fram, used to get hand and set timer
+    /// called every frame, used to get hand and set timer
     /// </summary>
     private void Update()
     {
-        for (int i = 0; i < 2; i++)
+        /*for (int i = 0; i < 2; i++)
         {
             if (!PlayerController.getHand()[i].isNull())
             {
                 handUI[i].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[PlayerController.getHand()[i].getSuit() * 13 + PlayerController.getHand()[i].getRank()];
             }
-        }
+        }*/
         timerText.SetText(timer.ToString("0.00"));
     }
 
@@ -228,7 +228,7 @@ public class GameController : MonoBehaviour
                 break;
             case 3:
                 riverUI[4].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprites()[river[4].getSuit() * 13 + river[4].getRank()];
-                game = false;
+                game = false;   //stops spawning of cards
                 break;
         }
         riverFlipperStage++;
@@ -344,5 +344,12 @@ public class GameController : MonoBehaviour
                 cutScene.GetComponent<CutUiScript>().Activate();
             }
         }
+    }
+
+    public void updateHandSprite(int slot, CardData card)
+    {
+        Debug.Log("Slot: " + slot);
+        Debug.Log(card.getRankName() + " of " + card.getSuitName());
+        handUI[slot].GetComponent<SpriteRenderer>().sprite = CardController.getCardSprite(card);
     }
 }

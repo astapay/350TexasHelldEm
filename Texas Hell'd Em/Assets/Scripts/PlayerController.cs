@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         chooseRight.performed += chooseRightPerformed;
         pauseToggle.started += PauseToggleStarted;
         quit.started += QuitStarted;
-        logHand();
         RightCardIndicator.SetActive(false);
         LeftCardIndicator.SetActive(true);
         gameController = FindObjectOfType<GameController>();
@@ -139,15 +138,16 @@ public class PlayerController : MonoBehaviour
     // The card to be added to the hand
     // </param>
     public void addToHand(CardData card) {
-        for (int i = 0; i < hand.Length; i++) {
+        for (int i = 0; i < 2; i++) {
             if (hand[i].Equals(nullCard))
             {
                 hand[i] = card;
-                logHand();
+                gameController.updateHandSprite(i, card);
                 return;
             }
         }
         hand[selectedCard] = card;
+        gameController.updateHandSprite(selectedCard, card);
     }
 
     // <summary>
